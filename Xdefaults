@@ -1,0 +1,51 @@
+URxvt.font: xft:Inconsolata:pixelsize=16,\
+            -*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt.loginShell: true
+URxvt.termName: rxvt-unicode
+URxvt.scrollBar: false
+URxvt.intensityStyles: false
+URxvt.saveLines: 50000
+URxvt.urgentOnBell: true
+URxvt.cursorBlink: false
+
+URxvt.perl-ext-common: default,clipboard,url-select,matcher
+URxvt.keysym.Mod4-c: perl:clipboard:copy
+URxvt.keysym.Mod4-v: perl:clipboard:paste
+URxvt.keysym.Mod4-V: perl:clipboard:paste_escaped
+URxvt.url-select.launcher: google-chrome-stable
+URxvt.url-select.underline: true
+URxvt.matcher.button: 1
+
+URxvt.clipboard.autocopy: true
+URxvt.iso14755: false
+
+!Xft.dpi: 165
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+*background:             #181818
+*foreground:             #D8D8D8
+*fadeColor:              #F8F8F8
+*cursorColor:            #D8D8D8
+*pointerColorBackground: #86C1B9
+*pointerColorForeground: #859900
+*color0:                 #181818
+*color8:                 #585858
+*color1:                 #ABB56C
+*color9:                 #181818
+*color2:                 #859900
+*color10:                #859900
+*color3:                 #F7AFC2
+*color11:                #F7AFC2
+*color4:                 #7CAFC2
+*color12:                #7CAFC2
+*color5:                 #BA8BAF
+*color13:                #BA8BAF
+*color6:                 #86C1B9
+*color14:                #86C1B9
+*color7:                 #D8D8D8
+*color15:                #F8F8F8
