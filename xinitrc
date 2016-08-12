@@ -9,4 +9,7 @@ setxkbmap -option caps:backspace
 setxkbmap -option shift:both_capslock
 xmodmap -e "clear Lock"
 
+# Keyboard repeat rate
+xset r rate 280 50
+
 exec i3
