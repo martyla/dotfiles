@@ -33,6 +33,8 @@ Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
 
+Xcursor.size: 16
+
 *background:             #181818
 *foreground:             #D8D8D8
 *fadeColor:              #F8F8F8
