@@ -39,9 +39,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'editorconfig/editorconfig-vim' " Editor agnostic project settings
 NeoBundle 'matze/vim-move' " Visually move text around.
 NeoBundle 'tpope/vim-git' " Git syntax highlighting
-NeoBundle 'tpope/vim-vinegar' " Improves netrw
 NeoBundle 'scrooloose/syntastic' " Runs linters over your code
-NeoBundle 'solarnz/arcanist.vim' " Arcanist syntax highlighting
 NeoBundle 'solarnz/committia.vim' " Show a differential when doing git commit
 NeoBundle 'chrisbra/vim-diff-enhanced' " Better differential algorithms
 
@@ -52,7 +50,7 @@ NeoBundle 'junegunn/fzf.vim'
 NeoBundle 'itchyny/lightline.vim' " The best statusbar plugin.
 NeoBundle 'chriskempson/base16-vim' " The base16 color scheme for vim
 
-" Language plugins
+" Language/syntax support
 NeoBundle 'pangloss/vim-javascript' " Javascript language support
 NeoBundle 'othree/html5.vim'
 NeoBundle 'fatih/vim-go' " Golang language support
@@ -61,6 +59,7 @@ NeoBundle "hail2u/vim-css3-syntax" " Css language support
 NeoBundle 'hynek/vim-python-pep8-indent' " Better python indentation support
 NeoBundle 'solarnz/python.vim' " Python syntax highlighting
 NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'solarnz/arcanist.vim' " Arcanist syntax highlighting
 
 call neobundle#end()
 
