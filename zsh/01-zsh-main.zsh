@@ -68,3 +68,15 @@ bindkey '^[[1;5D' backward-word
 if [[ "${terminfo[kcbt]}" != "" ]]; then
   bindkey "${terminfo[kcbt]}" reverse-menu-complete
 fi
+
+# [Backspace] - delete backward
+bindkey '^?' backward-delete-char
+
+# [Delete] - delete forward
+if [[ "${terminfo[kdch1]}" != "" ]]; then
+  bindkey "${terminfo[kdch1]}" delete-char
+else
+  bindkey "^[[3~" delete-char
+  bindkey "^[3;5~" delete-char
+  bindkey "\e[3~" delete-char
+fi
