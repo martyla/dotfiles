@@ -12,4 +12,7 @@ xmodmap -e "clear Lock"
 # Keyboard repeat rate
 xset r rate 300 50
 
+# Merge Xdefaults
+xrdb -merge $HOME/.Xdefaults
+
 exec i3
