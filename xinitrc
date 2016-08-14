@@ -10,6 +10,6 @@ setxkbmap -option shift:both_capslock
 xmodmap -e "clear Lock"
 
 # Keyboard repeat rate
-xset r rate 280 50
+xset r rate 300 50
 
 exec i3
