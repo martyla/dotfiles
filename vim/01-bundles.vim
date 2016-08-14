@@ -40,12 +40,9 @@ NeoBundle 'scrooloose/syntastic' " Runs linters over your code
 NeoBundle 'rhysd/committia.vim' " Show a differential when doing git commit
 NeoBundle 'chrisbra/vim-diff-enhanced' " Better differential algorithms
 
+" Fuzzy finder
 NeoBundle 'junegunn/fzf'
 NeoBundle 'junegunn/fzf.vim'
-
-" Themes
-NeoBundle 'itchyny/lightline.vim' " The best statusbar plugin.
-NeoBundle 'chriskempson/base16-vim' " The base16 color scheme for vim
 
 " Language/syntax support
 NeoBundle 'pangloss/vim-javascript' " Javascript language support
@@ -58,6 +55,10 @@ NeoBundle 'solarnz/python.vim' " Python syntax highlighting
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'tpope/vim-git' " Git syntax highlighting
 NeoBundle 'solarnz/arcanist.vim' " Arcanist syntax highlighting
+
+" Themes
+NeoBundle 'itchyny/lightline.vim' " The best statusbar plugin.
+NeoBundle 'chriskempson/base16-vim' " The base16 color scheme for vim
 
 call neobundle#end()
 

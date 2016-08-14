@@ -15,10 +15,8 @@ set scrolloff=10
 
 " Set key shortcuts
 set bs=2
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-" Open the tag definition in a vertical split window, off to the right.
-nnoremap <silent> <Leader>] :vsp <CR><C-W>l<CR>:exec("tag ".expand("<cword>"))<CR>
+" Tabs
 nnoremap <Leader><Left> :tabprev <CR>
 nnoremap <Leader>h :tabprev <CR>
 nnoremap <Leader>l :tabnext <CR>
@@ -27,11 +25,8 @@ nnoremap <Leader>n :tabnew <CR>
 nnoremap <Leader>q :q <CR>
 nnoremap <Leader>Q :wq<CR>
 nnoremap <C-W>t :tabnew <CR>
-nnoremap <Leader><Backspace> :undo <CR>
 
-nnoremap ` :
-
-" Easier window movement keys for the teck.
+" Easier window movement keys
 nnoremap tn :split <CR>
 nnoremap tv :vsplit <CR>
 nnoremap tr :tabnew <CR>
@@ -56,14 +51,12 @@ vnoremap   <Left>   <NOP>
 vnoremap   <Right>  <NOP>
 
 " Easy shortcut to switch back to normal mode
-inoremap jj <esc>
-inoremap jk <esc>
-
-nnoremap fd :write <CR>
+inoremap nn <esc>
 
 noremap      <F1>    <ESC>
 inoremap     <F1>    <ESC>
 vnoremap     <F1>    <ESC>
 nnoremap     <F1>    <ESC>
 
+" Clear highlight
 noremap <Leader>m :noh <CR>
