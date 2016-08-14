@@ -37,7 +37,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'editorconfig/editorconfig-vim' " Editor agnostic project settings
 NeoBundle 'matze/vim-move' " Visually move text around.
 NeoBundle 'scrooloose/syntastic' " Runs linters over your code
-NeoBundle 'solarnz/committia.vim' " Show a differential when doing git commit
+NeoBundle 'rhysd/committia.vim' " Show a differential when doing git commit
 NeoBundle 'chrisbra/vim-diff-enhanced' " Better differential algorithms
 
 NeoBundle 'junegunn/fzf'
