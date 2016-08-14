@@ -7,6 +7,12 @@ URxvt.intensityStyles: false
 URxvt.saveLines: 50000
 URxvt.urgentOnBell: true
 URxvt.cursorBlink: false
+URxvt.internalBorder: 0
+URxvt.externalBorder: 0
+URxvt.borderLess: false
+
+! delimiters for double-click selection
+URxvt.cutchars:           BACKSLASH '"'&()URxvt,;<=>?@[]^{|}
 
 URxvt.perl-ext-common: default,clipboard,url-select,matcher
 URxvt.keysym.Mod4-c: perl:clipboard:copy
