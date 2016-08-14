@@ -1,4 +1,2 @@
-" If vim has ruby compiled in, then use CommandT. Otherwise, default to using
-" unite for opening files.
-
+" fzf
 nnoremap <Leader>t :Files<CR>

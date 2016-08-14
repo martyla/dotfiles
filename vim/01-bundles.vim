@@ -11,7 +11,6 @@ let s:neobundle_dir = expand('~/.vim/bundle')
 
 " Install NeoBundle - The hard way, without using submodules!
 if has('vim_starting')
-
     " Clone and or Load NeoBundle
     if isdirectory('neobundle.vim')
         set runtimepath^=neobundle.vim
@@ -27,7 +26,6 @@ if has('vim_starting')
 
         execute 'set runtimepath^=' . s:neobundle_dir.'/neobundle.vim'
     endif
-
 endif
 
 call neobundle#begin(s:neobundle_dir)
@@ -38,7 +36,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " Functionality
 NeoBundle 'editorconfig/editorconfig-vim' " Editor agnostic project settings
 NeoBundle 'matze/vim-move' " Visually move text around.
-NeoBundle 'tpope/vim-git' " Git syntax highlighting
 NeoBundle 'scrooloose/syntastic' " Runs linters over your code
 NeoBundle 'solarnz/committia.vim' " Show a differential when doing git commit
 NeoBundle 'chrisbra/vim-diff-enhanced' " Better differential algorithms
@@ -59,6 +56,7 @@ NeoBundle "hail2u/vim-css3-syntax" " Css language support
 NeoBundle 'hynek/vim-python-pep8-indent' " Better python indentation support
 NeoBundle 'solarnz/python.vim' " Python syntax highlighting
 NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-git' " Git syntax highlighting
 NeoBundle 'solarnz/arcanist.vim' " Arcanist syntax highlighting
 
 call neobundle#end()
