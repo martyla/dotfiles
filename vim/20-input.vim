@@ -51,7 +51,7 @@ vnoremap   <Left>   <NOP>
 vnoremap   <Right>  <NOP>
 
 " Easy shortcut to switch back to normal mode
-inoremap nn <esc>
+inoremap hh <esc>
 
 noremap      <F1>    <ESC>
 inoremap     <F1>    <ESC>
