@@ -24,3 +24,10 @@
 | Keyboard combination | Description |
 | -------------------- | ----------- |
 | <Leader>t            | :Files      |
+| <Leader>g            | :GitFiles   |
+| <Leader>f            | :Ag         |
+
+### Binaries required
+
+`fzf` for fuzzy file searching
+`ag` for code searching
