@@ -13,6 +13,7 @@
 [alias]
     ctags = !.git/hooks/ctags
     unchangeable = !git ls-files -v | grep ^[a-z]
+    lg = log --color --graph --abbrev-commit --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an>%Creset'
 [apply]
     whitespace = error
 [diff]
