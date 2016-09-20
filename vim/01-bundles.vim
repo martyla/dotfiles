@@ -39,6 +39,8 @@ NeoBundle 'matze/vim-move' " Visually move text around.
 NeoBundle 'scrooloose/syntastic' " Runs linters over your code
 NeoBundle 'rhysd/committia.vim' " Show a differential when doing git commit
 NeoBundle 'chrisbra/vim-diff-enhanced' " Better differential algorithms
+NeoBundle 'scrooloose/nerdcommenter' " Easier commenting
+NeoBundle 'mbbill/undotree' " Shows the vim undo tree in a window.
 
 " Fuzzy finder
 NeoBundle 'junegunn/fzf'
