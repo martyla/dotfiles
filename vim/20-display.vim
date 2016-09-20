@@ -8,6 +8,9 @@ catch /^Vim\%((\a\+)\)\=:E185/
     " Well, not much I can do at the moment
 endtry
 
+" Automatically refresh unchanged files
+set autoread
+
 set autoindent
 
 set showmatch
