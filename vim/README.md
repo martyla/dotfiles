@@ -24,7 +24,6 @@
 | Keyboard combination | Description |
 | -------------------- | ----------- |
 | <Leader>t            | :Files      |
-| <Leader>g            | :GitFiles   |
 
 ### Binaries required
 
