@@ -13,11 +13,11 @@
 | <Leader>Q            | :wq         |
 | tn                   | :split      |
 | tv                   | :vsplit     |
-| tr                   | :tabnew     |
 | th                   | :wincmd h   |
 | tj                   | :wincmd j   |
 | tk                   | :wincmd k   |
 | tl                   | :wincmd l   |
+| <Tab><Tab>           | :<C-^>      |
 
 ### Plugins
 

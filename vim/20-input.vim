@@ -25,6 +25,9 @@ nnoremap <Leader>n :tabnew <CR>
 nnoremap <Leader>q :q <CR>
 nnoremap <Leader>Q :wq<CR>
 
+" Switch to alternate file
+nnoremap <Tab><Tab> <C-^><CR>
+
 " Easier window movement keys
 nnoremap tn :split <CR>
 nnoremap tv :vsplit <CR>
