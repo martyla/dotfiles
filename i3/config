@@ -128,8 +128,8 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Function key bindings
-#bindsym XF86MonBrightnessDown exec sudo intelbacklight -dec 4
-#bindsym XF86MonBrightnessUp exec sudo intelbacklight -inc 4
+bindsym XF86MonBrightnessDown exec xbacklight -dec 4
+bindsym XF86MonBrightnessUp exec xbacklight -inc 4
 #bindsym XF86AudioPrev exec
 #bindsym XF86AudioPlay exec
 #bindsym XF86AudioNext exec
