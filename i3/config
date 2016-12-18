@@ -163,4 +163,6 @@ bar {
 }
 
 # Misc programs
+exec ~/.i3/local.sh
 exec xrdb ~/.Xresources
+exec killall -q autocutsel; autocutsel -f && autocutsel -s PRIMARY -f
