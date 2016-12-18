@@ -24,6 +24,8 @@
 | Keyboard combination | Description |
 | -------------------- | ----------- |
 | <Leader>t            | :Files      |
+| <Leader>j            | :History    |
+| <Leader>b            | :Buffer     |
 
 ### Binaries required
 

@@ -24,12 +24,10 @@ nnoremap <Leader><Right> :tabnext <CR>
 nnoremap <Leader>n :tabnew <CR>
 nnoremap <Leader>q :q <CR>
 nnoremap <Leader>Q :wq<CR>
-nnoremap <C-W>t :tabnew <CR>
 
 " Easier window movement keys
 nnoremap tn :split <CR>
 nnoremap tv :vsplit <CR>
-nnoremap tr :tabnew <CR>
 
 nnoremap th :wincmd h <CR>
 nnoremap tj :wincmd j <CR>
