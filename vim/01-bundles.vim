@@ -30,7 +30,7 @@ endif
 
 call neobundle#begin(s:neobundle_dir)
 
-" Allow NeoBundle to update itself O.o
+" Allow NeoBundle to update itself
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Functionality
@@ -45,6 +45,9 @@ NeoBundle 'mbbill/undotree' " Shows the vim undo tree in a window.
 " Fuzzy finder
 NeoBundle 'junegunn/fzf'
 NeoBundle 'junegunn/fzf.vim'
+
+" Auto-complete
+NeoBundle 'Shougo/neocomplete.vim'
 
 " Language/syntax support
 NeoBundle 'pangloss/vim-javascript' " Javascript language support
