@@ -63,6 +63,7 @@ TEXT
       "name": "battery"
   },
   ${endif}
+  { "full_text": "Vol: ${exec amixer -c 0 get Master | grep Mono: | cut -d " " -f6 | tr -d "[]"}" },
   ${if_up wl0}
       { "full_text": "wl0: ${wireless_essid wl0} ${wireless_bitrate wl0} ${addr wl0}: ${downspeed wl0}/${upspeed wl0}", "color": "\#00ff00", "name": "network"},
   ${endif}
