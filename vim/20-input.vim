@@ -16,14 +16,15 @@ set scrolloff=10
 " Set key shortcuts
 set bs=2
 
-" Tabs
-nnoremap <Leader><Left> :tabprev <CR>
-nnoremap <Leader>h :tabprev <CR>
-nnoremap <Leader>l :tabnext <CR>
-nnoremap <Leader><Right> :tabnext <CR>
-nnoremap <Leader>n :tabnew <CR>
 nnoremap <Leader>q :q <CR>
 nnoremap <Leader>Q :wq<CR>
+
+" Tabs
+" nnoremap <Leader><Left> :tabprev <CR>
+" nnoremap <Leader>h :tabprev <CR>
+" nnoremap <Leader>l :tabnext <CR>
+" nnoremap <Leader><Right> :tabnext <CR>
+" nnoremap <Leader>n :tabnew <CR>
 
 " Switch to alternate file
 nnoremap <Tab> <C-^><CR>
