@@ -13,6 +13,9 @@ set shiftwidth=4
 set ruler
 set scrolloff=10
 
+" Allow changing buffers without saving
+set hidden
+
 " Set key shortcuts
 set bs=2
 
