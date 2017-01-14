@@ -1,75 +1,74 @@
 filetype off
 
-" Setup NeoBundle settings
-let g:neobundle#enable_tail_path = 1
-let g:neobundle#install_process_timeout = 480
+if &compatible
+    set nocompatible
+endif
 
-" Install the bundles after we have installed neo bundle
-let s:install_neo_bundles = 0
+" Install the bundles after we have installed dein
+let s:install_plugins = 0
 
-let s:neobundle_dir = expand('~/.vim/bundle')
+let s:plugin_dir = expand('~/.vim/bundle')
 
-" Install NeoBundle - The hard way, without using submodules!
+" Install dein.vim
 if has('vim_starting')
-    " Clone and or Load NeoBundle
-    if isdirectory('neobundle.vim')
-        set runtimepath^=neobundle.vim
-    elseif finddir('neobundle.vim', '.;') != ''
-        execute 'set runtimepath^=' . finddir('neobundle.vim', '.;')
-    elseif &runtimepath !~ '/neobundle.vim'
-        if !isdirectory(s:neobundle_dir.'/neobundle.vim')
-            execute printf('!git clone %s://github.com/Shougo/neobundle.vim.git',
+    " Clone and or Load dein.vim
+    if isdirectory('bundle/repos/github.com/Shougo/dein.vim')
+        set runtimepath^=bundle/repos/github.com/Shougo/dein.vim
+    elseif finddir('dein.vim', '.;') != ''
+        execute 'set runtimepath^=' . finddir('dein.vim', '.;')
+    elseif &runtimepath !~ '/dein.vim'
+        if !isdirectory(s:plugin_dir.'/repos/github.com/Shougo/dein.vim')
+            execute printf('!git clone %s://github.com/Shougo/dein.vim.git',
                         \ (exists('$http_proxy') ? 'https' : 'git'))
-                        \ s:neobundle_dir.'/neobundle.vim'
-            let s:install_neo_bundles = 1
+                        \ s:plugin_dir.'/repos/github.com/Shougo/dein.vim'
+            let s:install_plugins = 1
         endif
-
-        execute 'set runtimepath^=' . s:neobundle_dir.'/neobundle.vim'
+        execute 'set runtimepath^=' . s:plugin_dir.'/repos/github.com/Shougo/dein.vim'
     endif
 endif
 
-call neobundle#begin(s:neobundle_dir)
+call dein#begin(s:plugin_dir)
 
-" Allow NeoBundle to update itself
-NeoBundleFetch 'Shougo/neobundle.vim'
+" Allow dein to update itself
+call dein#add('Shougo/dein.vim')
 
 " Functionality
-NeoBundle 'editorconfig/editorconfig-vim' " Editor agnostic project settings
-NeoBundle 'matze/vim-move' " Visually move text around.
-NeoBundle 'scrooloose/syntastic' " Runs linters over your code
-NeoBundle 'rhysd/committia.vim' " Show a differential when doing git commit
-NeoBundle 'chrisbra/vim-diff-enhanced' " Better differential algorithms
-NeoBundle 'scrooloose/nerdcommenter' " Easier commenting
-NeoBundle 'mbbill/undotree' " Shows the vim undo tree in a window.
-NeoBundle 'tpope/vim-vinegar' " Improved netrw view
+call dein#add('editorconfig/editorconfig-vim') " Editor agnostic project settings
+call dein#add('matze/vim-move') " Visually move text around.
+call dein#add('scrooloose/syntastic') " Runs linters over your code
+call dein#add('rhysd/committia.vim') " Show a differential when doing git commit
+call dein#add('chrisbra/vim-diff-enhanced') " Better differential algorithms
+call dein#add('scrooloose/nerdcommenter') " Easier commenting
+call dein#add('mbbill/undotree') " Shows the vim undo tree in a window.
+call dein#add('tpope/vim-vinegar') " Improved netrw view
 
 " Fuzzy finder
-NeoBundle 'junegunn/fzf'
-NeoBundle 'junegunn/fzf.vim'
+call dein#add('junegunn/fzf', {'merged': 0})
+call dein#add('junegunn/fzf.vim', {'depends': 'fzf'})
 
 " Auto-complete
-NeoBundle 'Shougo/neocomplete.vim'
+call dein#add('Shougo/neocomplete.vim')
 
 " Language/syntax support
-NeoBundle 'pangloss/vim-javascript' " Javascript language support
-NeoBundle 'othree/html5.vim'
-NeoBundle 'fatih/vim-go' " Golang language support
-NeoBundle "groenewege/vim-less" " Less language support
-NeoBundle "hail2u/vim-css3-syntax" " Css language support
-NeoBundle 'hynek/vim-python-pep8-indent' " Better python indentation support
-NeoBundle 'solarnz/python.vim' " Python syntax highlighting
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-git' " Git syntax highlighting
-NeoBundle 'solarnz/arcanist.vim' " Arcanist syntax highlighting
+call dein#add('pangloss/vim-javascript') " Javascript language support
+call dein#add('othree/html5.vim')
+call dein#add('fatih/vim-go') " Golang language support
+call dein#add('groenewege/vim-less') " Less language support
+call dein#add('hail2u/vim-css3-syntax') " Css language support
+call dein#add('hynek/vim-python-pep8-indent') " Better python indentation support
+call dein#add('solarnz/python.vim') " Python syntax highlighting
+call dein#add('vim-ruby/vim-ruby')
+call dein#add('tpope/vim-git') " Git syntax highlighting
+call dein#add('solarnz/arcanist.vim') " Arcanist syntax highlighting
 
 " Themes
-NeoBundle 'itchyny/lightline.vim' " The best statusbar plugin.
-NeoBundle 'chriskempson/base16-vim' " The base16 color scheme for vim
+call dein#add('itchyny/lightline.vim') " The best statusbar plugin.
+call dein#add('chriskempson/base16-vim') " The base16 color scheme for vim
 
-call neobundle#end()
+call dein#end()
 
-if has('vim_starting') && s:install_neo_bundles == 1
-    NeoBundleInstall
+if has('vim_starting') && s:install_plugins == 1
+    call dein#install()
 endif
 
 set encoding=utf-8
