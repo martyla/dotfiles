@@ -41,6 +41,7 @@ NeoBundle 'rhysd/committia.vim' " Show a differential when doing git commit
 NeoBundle 'chrisbra/vim-diff-enhanced' " Better differential algorithms
 NeoBundle 'scrooloose/nerdcommenter' " Easier commenting
 NeoBundle 'mbbill/undotree' " Shows the vim undo tree in a window.
+NeoBundle 'tpope/vim-vinegar' " Improved netrw view
 
 " Fuzzy finder
 NeoBundle 'junegunn/fzf'
