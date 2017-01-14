@@ -47,7 +47,7 @@ call dein#add('junegunn/fzf', {'merged': 0})
 call dein#add('junegunn/fzf.vim', {'depends': 'fzf'})
 
 " Auto-complete
-call dein#add('Shougo/neocomplete.vim')
+call dein#add('Shougo/deoplete.nvim')
 
 " Language/syntax support
 call dein#add('pangloss/vim-javascript') " Javascript language support
