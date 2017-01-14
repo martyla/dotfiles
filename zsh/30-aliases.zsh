@@ -17,3 +17,8 @@ alias rip="curl http://icanhazip.com"
 
 # Reload shell (invoke as login shell)
 alias reload="exec $SHELL -l"
+
+# Prefer nvim if it is installed
+if [[ -e "$(which nvim)" ]]; then
+    alias vim="nvim"
+fi
