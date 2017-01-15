@@ -39,7 +39,6 @@ call dein#add('scrooloose/syntastic') " Runs linters over your code
 call dein#add('rhysd/committia.vim') " Show a differential when doing git commit
 call dein#add('chrisbra/vim-diff-enhanced') " Better differential algorithms
 call dein#add('scrooloose/nerdcommenter') " Easier commenting
-call dein#add('mbbill/undotree') " Shows the vim undo tree in a window.
 call dein#add('tpope/vim-vinegar') " Improved netrw view
 
 " Fuzzy finder
