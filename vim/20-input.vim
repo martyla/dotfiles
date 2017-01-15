@@ -65,3 +65,8 @@ nnoremap     <F1>    <ESC>
 
 " Clear highlight
 noremap <Leader>m :noh <CR>
+
+" Disable mouse for neovmim
+if has('nvim')
+    set mouse=""
+endif
