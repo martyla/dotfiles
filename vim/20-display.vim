@@ -8,6 +8,9 @@ catch /^Vim\%((\a\+)\)\=:E185/
     " Well, not much I can do at the moment
 endtry
 
+" Update the title automatically to reflect file name
+set title
+
 " Automatically refresh unchanged files
 set autoread
 
