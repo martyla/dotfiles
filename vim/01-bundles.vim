@@ -50,6 +50,7 @@ call dein#add('Shougo/deoplete.nvim')
 
 " Language/syntax support
 call dein#add('pangloss/vim-javascript') " Javascript language support
+call dein#add('mxw/vim-jsx') " Facebook jsx support
 call dein#add('othree/html5.vim')
 call dein#add('fatih/vim-go') " Golang language support
 call dein#add('groenewege/vim-less') " Less language support
