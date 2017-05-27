@@ -16,6 +16,9 @@ set autoread
 
 set autoindent
 
+" Use system clipboard
+set clipboard=unnamed
+
 set showmatch
 set matchpairs=(:),{:},[:],<:>
 
