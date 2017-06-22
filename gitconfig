@@ -10,6 +10,8 @@
     filemode = false
 [push]
     default = current
+[pull]
+    default = current
 [alias]
     ctags = !.git/hooks/ctags
     unchangeable = !git ls-files -v | grep ^[a-z]
@@ -25,8 +27,6 @@
     conflictstyle = diff3
 [mergetool]
     prompt = false
-[push]
-    default = current
 [color]
     ui = true
 [color "branch"]
