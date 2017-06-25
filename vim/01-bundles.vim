@@ -40,6 +40,7 @@ call dein#add('rhysd/committia.vim') " Show a differential when doing git commit
 call dein#add('chrisbra/vim-diff-enhanced') " Better differential algorithms
 call dein#add('scrooloose/nerdcommenter') " Easier commenting
 call dein#add('tpope/vim-vinegar') " Improved netrw view
+call dein#add('tpope/vim-fugitive') " git wrapper
 
 " Fuzzy finder
 call dein#add('junegunn/fzf', {'merged': 0})
