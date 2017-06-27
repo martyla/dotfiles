@@ -17,4 +17,8 @@ xset s blank
 xset s 300 # blank at 5 min
 xset dpms 0 360 600 # suspend at 6 min, off at 10 min
 
+# Disable system bell
+xset b off
+xset b 0 0 0
+
 exec i3
