@@ -43,6 +43,7 @@ call dein#add('tpope/vim-fugitive') " git wrapper
 call dein#add('tpope/vim-vinegar') " Improved netrw view
 call dein#add('tpope/vim-surround') " git wrapper
 call dein#add('Shougo/deoplete.nvim') " Autocomplete
+call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
 
 " Fuzzy finder
 call dein#add('junegunn/fzf', {'merged': 0})
