@@ -42,6 +42,7 @@ call dein#add('scrooloose/nerdcommenter') " Easier commenting
 call dein#add('tpope/vim-fugitive') " git wrapper
 call dein#add('tpope/vim-vinegar') " Improved netrw view
 call dein#add('tpope/vim-surround') " git wrapper
+call dein#add('tpope/vim-repeat') " Allow repeating of plugin commands
 call dein#add('Shougo/deoplete.nvim') " Autocomplete
 call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
 
