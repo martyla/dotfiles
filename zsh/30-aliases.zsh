@@ -6,7 +6,7 @@ alias h="history"
 alias j="jobs"
 
 # Use color output for ls/grep
-alias ls="ls --color"
+alias ls="ls -GFh"
 alias grep="grep --color=auto"
 
 # Allow aliases to be sudo'd
