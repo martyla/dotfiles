@@ -66,6 +66,16 @@ nnoremap     <F1>    <ESC>
 " Clear highlight
 noremap <Leader>m :noh <CR>
 
+" Fix netrw local rebinding of keys (`tn`)
+augroup netrw_mapping
+    autocmd!
+    autocmd filetype netrw call FixNetrw()
+augroup end
+
+function! FixNetrw()
+    noremap <buffer> tn :split<CR>
+endfunction
+
 " Disable mouse for neovmim
 if has('nvim')
     set mouse=""
