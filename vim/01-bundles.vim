@@ -44,8 +44,6 @@ call dein#add('tpope/vim-fugitive') " git wrapper
 call dein#add('tpope/vim-vinegar') " Improved netrw view
 call dein#add('tpope/vim-surround') " git wrapper
 call dein#add('tpope/vim-repeat') " Allow repeating of plugin commands
-call dein#add('Shougo/deoplete.nvim') " Autocomplete
-call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
 
 " Fuzzy finder
 call dein#add('junegunn/fzf', {'merged': 0})
@@ -64,7 +62,13 @@ call dein#add('vim-ruby/vim-ruby')
 call dein#add('tpope/vim-git') " Git syntax highlighting
 call dein#add('solarnz/arcanist.vim') " Arcanist syntax highlighting
 call dein#add('leafgarland/typescript-vim') " TypeScript syntax highlighting and compilation
-call dein#add('Quramy/tsuquyomi') " Client for TSServer
+call dein#add('Quramy/tsuquyomi') " Client for TypeScript TSServer
+call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
+
+" Autocomplete
+call dein#add('Shougo/deoplete.nvim') " Async autocomplete
+call dein#add('carlitux/deoplete-ternjs', {'build': 'yarn global add tern'}) " JS autocomplete
+call dein#add('mhartington/nvim-typescript') " Typescript autocomplete
 
 " Themes
 call dein#add('itchyny/lightline.vim') " The best statusbar plugin.
