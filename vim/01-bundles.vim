@@ -69,7 +69,8 @@ call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript c
 " Autocomplete
 call dein#add('Shougo/deoplete.nvim') " Async autocomplete
 call dein#add('carlitux/deoplete-ternjs', {'build': 'yarn global add tern'}) " JS autocomplete
-call dein#add('mhartington/nvim-typescript') " Typescript autocomplete
+call dein#add('mhartington/nvim-typescript')
+call dein#add('zchee/deoplete-go', {'build': 'make'})
 
 " Themes
 call dein#add('itchyny/lightline.vim') " The best statusbar plugin.
