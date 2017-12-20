@@ -34,6 +34,7 @@ call dein#add('Shougo/dein.vim')
 
 " Functionality
 call dein#add('Shougo/vimproc.vim', {'build': 'make'}) " Async execution library
+call dein#add('Shougo/echodoc.vim') " Display echodoc text (function signatures)
 call dein#add('editorconfig/editorconfig-vim') " Editor agnostic project settings
 call dein#add('matze/vim-move') " Visually move text around.
 call dein#add('scrooloose/syntastic') " Runs linters over your code

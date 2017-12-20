@@ -13,7 +13,6 @@ set title
 
 " Automatically refresh unchanged files
 set autoread
-
 set autoindent
 
 " Use system clipboard
@@ -45,6 +44,9 @@ let &t_EI = "\e]50;CursorShape=0\x7"
 " Completion show longest match (rather than first), and show menu on single match
 set completeopt=longest,menuone
 set pumheight=20
+
+" Already showing the mode in powerline
+set noshowmode
 
 " <TAB>/<s-TAB> completion
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
