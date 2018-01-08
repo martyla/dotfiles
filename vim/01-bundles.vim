@@ -61,7 +61,6 @@ call dein#add('hynek/vim-python-pep8-indent') " Better python indentation suppor
 call dein#add('solarnz/python.vim') " Python syntax highlighting
 call dein#add('vim-ruby/vim-ruby')
 call dein#add('tpope/vim-git') " Git syntax highlighting
-call dein#add('solarnz/arcanist.vim') " Arcanist syntax highlighting
 call dein#add('leafgarland/typescript-vim') " TypeScript syntax highlighting and compilation
 call dein#add('Quramy/tsuquyomi') " Client for TypeScript TSServer
 call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
