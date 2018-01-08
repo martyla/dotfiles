@@ -63,6 +63,7 @@ call dein#add('vim-ruby/vim-ruby')
 call dein#add('tpope/vim-git') " Git syntax highlighting
 call dein#add('leafgarland/typescript-vim') " TypeScript syntax highlighting and compilation
 call dein#add('Quramy/tsuquyomi') " Client for TypeScript TSServer
+call dein#add('nikvdp/ejs-syntax') " EJS html templates highlighting
 call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
 
 " Autocomplete
