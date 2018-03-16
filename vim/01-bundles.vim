@@ -45,6 +45,7 @@ call dein#add('tpope/vim-fugitive') " git wrapper
 call dein#add('tpope/vim-vinegar') " Improved netrw view
 call dein#add('tpope/vim-surround') " git wrapper
 call dein#add('tpope/vim-repeat') " Allow repeating of plugin commands
+call dein#add('junegunn/goyo.vim') " Distraction free writing
 
 " Fuzzy finder
 call dein#add('junegunn/fzf', {'merged': 0})
