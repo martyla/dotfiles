@@ -1,9 +1,14 @@
 #!/bin/zsh
 
 # Shortcuts
-alias g="git"
 alias h="history"
 alias j="jobs"
+
+# Git
+alias g="git"
+alias gc="git commit"
+alias ga="git add"
+alias gr="git reset"
 
 # Use color output for ls/grep
 if ls --help 2>&1 | grep -q -- --color
