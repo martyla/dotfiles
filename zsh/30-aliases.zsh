@@ -37,3 +37,7 @@ alias cal='watch -c -n 180 gcalcli agenda today --military --defaultCalendar "mg
 if [[ -e "$(which nvim)" ]]; then
     alias vim="nvim"
 fi
+
+# vim
+alias v='vim'
+alias vf='vim $(fzf --height 40% --border --reverse)'
