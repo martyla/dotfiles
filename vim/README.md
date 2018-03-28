@@ -17,14 +17,14 @@
 | tj                   | :wincmd j   |
 | tk                   | :wincmd k   |
 | tl                   | :wincmd l   |
-| <Tab><Tab>           | :<C-^>      |
+| <Tab>                | :<C-^>      |
 
 ### Plugins
 
 | Keyboard combination | Description |
 | -------------------- | ----------- |
 | <Leader>t            | :Files      |
-| <Leader>j            | :History    |
+| <Leader>h            | :History    |
 | <Leader>b            | :Buffer     |
 
 ### Binaries required

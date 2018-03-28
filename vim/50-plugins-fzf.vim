@@ -17,7 +17,7 @@ endfunction
 
 nnoremap <Leader>t :call GFilesFallback()<CR>
 nnoremap <C-p> :call GFilesFallback()<CR>
-nnoremap <Leader>j :History<CR>
+nnoremap <Leader>h :History<CR>
 nnoremap <Leader>b :Buffer<CR>
 
 " Enable ripgrep as well on `Rg`
