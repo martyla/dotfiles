@@ -8,10 +8,13 @@ set -eu
 main() {
   local files=(
     ./20-*.vim
-    ./bundle/repos/github.com/chriskempson/base16-vim/colors/base16-default-dark.vim
+    ./bundle/repos/github.com/chriskempson/base16-vim/colors/base16-monokai.vim
   )
 
-  cat "${files[@]}" > minimal_vimrc
+  # HACK: inlining base16-monokai theme so need to exclude setting the color_name
+  cat "${files[@]}" \
+    | grep -v 'let g:colors_name' \
+    >minimal_vimrc
 }
 
 main
