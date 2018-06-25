@@ -67,6 +67,7 @@ call dein#add('leafgarland/typescript-vim') " TypeScript syntax highlighting and
 call dein#add('Quramy/tsuquyomi') " Client for TypeScript TSServer
 call dein#add('nikvdp/ejs-syntax') " EJS html templates highlighting
 call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
+call dein#add('heavenshell/vim-jsdoc') " JS/TS docs
 
 " Autocomplete
 call dein#add('Shougo/deoplete.nvim') " Async autocomplete
