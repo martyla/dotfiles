@@ -37,6 +37,7 @@ call dein#add('Shougo/vimproc.vim', {'build': 'make'}) " Async execution library
 call dein#add('Shougo/echodoc.vim') " Display echodoc text (function signatures)
 call dein#add('editorconfig/editorconfig-vim') " Editor agnostic project settings
 call dein#add('matze/vim-move') " Visually move text around.
+call dein#add('mbbill/undotree') " Undo tree visualization
 call dein#add('scrooloose/syntastic') " Runs linters over your code
 call dein#add('rhysd/committia.vim') " Show a differential when doing git commit
 call dein#add('chrisbra/vim-diff-enhanced') " Better differential algorithms
