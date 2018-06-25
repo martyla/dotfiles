@@ -1,7 +1,7 @@
 # editorconfig.org
 root = true
 
-[*.{js,jsx,ts,tsx,json,c,cpp,es6}]
+[*.{js,jsx,ts,tsx,json,c,cpp,es6,sh}]
 charset = utf-8
 end_of_line = lf
 indent_size = 2
