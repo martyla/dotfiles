@@ -72,7 +72,7 @@ call dein#add('heavenshell/vim-jsdoc') " JS/TS docs
 " Autocomplete
 call dein#add('Shougo/deoplete.nvim') " Async autocomplete
 call dein#add('carlitux/deoplete-ternjs', {'build': 'yarn global add tern'}) " JS autocomplete
-call dein#add('mhartington/nvim-typescript')
+call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
 call dein#add('zchee/deoplete-go', {'build': 'make'})
 
 " Themes
