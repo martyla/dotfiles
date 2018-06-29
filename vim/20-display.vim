@@ -29,7 +29,7 @@ set relativenumber
 au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 au InsertLeave * match ExtraWhitespace /\s\+$/
 highlight ExtraWhiteSpace ctermbg=52
-set spell spelllang=en_gb
+set nospell
 set hlsearch
 
 " Always show the status bar at the bottom of the window
