@@ -40,7 +40,6 @@ call dein#add('matze/vim-move') " Visually move text around.
 call dein#add('mbbill/undotree') " Undo tree visualization
 call dein#add('scrooloose/syntastic') " Runs linters over your code
 call dein#add('rhysd/committia.vim') " Show a differential when doing git commit
-call dein#add('chrisbra/vim-diff-enhanced') " Better differential algorithms
 call dein#add('scrooloose/nerdcommenter') " Easier commenting
 call dein#add('tpope/vim-fugitive') " git wrapper
 call dein#add('tpope/vim-vinegar') " Improved netrw view
@@ -57,23 +56,21 @@ call dein#add('pangloss/vim-javascript') " Javascript language support
 call dein#add('mxw/vim-jsx') " Facebook jsx support
 call dein#add('othree/html5.vim')
 call dein#add('fatih/vim-go') " Golang language support
-call dein#add('groenewege/vim-less') " Less language support
 call dein#add('hail2u/vim-css3-syntax') " Css language support
-call dein#add('hynek/vim-python-pep8-indent') " Better python indentation support
 call dein#add('solarnz/python.vim') " Python syntax highlighting
-call dein#add('vim-ruby/vim-ruby')
-call dein#add('tpope/vim-git') " Git syntax highlighting
 call dein#add('HerringtonDarkholme/yats.vim') " TypeScript syntax highlighting
 call dein#add('Quramy/tsuquyomi') " Client for TypeScript TSServer
 call dein#add('nikvdp/ejs-syntax') " EJS html templates highlighting
 call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
 call dein#add('heavenshell/vim-jsdoc') " JS/TS docs
+call dein#add('rust-lang/rust.vim') " Rust support
 
 " Autocomplete
 call dein#add('Shougo/deoplete.nvim') " Async autocomplete
 call dein#add('carlitux/deoplete-ternjs', {'build': 'yarn global add tern'}) " JS autocomplete
 call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
 call dein#add('zchee/deoplete-go', {'build': 'make'})
+call dein#add('racer-rust/vim-racer')
 
 " Themes
 call dein#add('itchyny/lightline.vim') " The best statusbar plugin.
