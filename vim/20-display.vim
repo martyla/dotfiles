@@ -13,6 +13,9 @@ set title
 
 " Automatically refresh unchanged files
 set autoread
+au CursorHold * checktime
+au FocusGained,BufEnter * :checktime " autoread when changing buffers
+
 set autoindent
 
 " Use system clipboard
