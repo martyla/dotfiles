@@ -4,13 +4,14 @@ set wildignore+=**/node_modules/**
 set wildignore+=**/build/**
 set wildignore+=*.pyc
 
+" If git directory, use `git ls-files` as source, else fallback to vanilla fzf
 function! GFilesFallback()
   let prefix = get(g:, 'fzf_command_prefix', '')
   let output = system('git rev-parse --is-inside-work-tree')
   if output =~ 'true'
-    exec "normal :" . prefix . "GFiles --exclude-standard --cached --others\<CR>"
-  else
-    exec "normal :" . prefix . "Files\<CR>"
+    call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --cached --others'}))
+    else
+    call fzf#run(fzf#wrap())
   endif
   return 0
 endfunction
