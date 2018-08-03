@@ -9,7 +9,7 @@ function! GFilesFallback()
   let prefix = get(g:, 'fzf_command_prefix', '')
   let output = system('git rev-parse --is-inside-work-tree')
   if output =~ 'true'
-    call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --cached --others'}))
+    call fzf#run(fzf#wrap({'source': 'git ls-files --exclude-standard --cached --others | uniq'}))
     else
     call fzf#run(fzf#wrap())
   endif
