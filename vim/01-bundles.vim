@@ -43,7 +43,7 @@ call dein#add('rhysd/committia.vim') " Show a differential when doing git commit
 call dein#add('scrooloose/nerdcommenter') " Easier commenting
 call dein#add('tpope/vim-fugitive') " git wrapper
 call dein#add('tpope/vim-vinegar') " Improved netrw view
-call dein#add('tpope/vim-surround') " git wrapper
+call dein#add('tpope/vim-surround') " manipulate surrounding symbols
 call dein#add('tpope/vim-repeat') " Allow repeating of plugin commands
 call dein#add('junegunn/goyo.vim') " Distraction free writing
 
@@ -68,7 +68,6 @@ call dein#add('rust-lang/rust.vim') " Rust support
 " Autocomplete
 call dein#add('Shougo/deoplete.nvim') " Async autocomplete
 call dein#add('carlitux/deoplete-ternjs', {'build': 'yarn global add tern'}) " JS autocomplete
-call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
 call dein#add('zchee/deoplete-go', {'build': 'make'})
 call dein#add('racer-rust/vim-racer')
 
