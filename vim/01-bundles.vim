@@ -59,11 +59,11 @@ call dein#add('fatih/vim-go') " Golang language support
 call dein#add('hail2u/vim-css3-syntax') " Css language support
 call dein#add('solarnz/python.vim') " Python syntax highlighting
 call dein#add('HerringtonDarkholme/yats.vim') " TypeScript syntax highlighting
-call dein#add('Quramy/tsuquyomi') " Client for TypeScript TSServer
 call dein#add('nikvdp/ejs-syntax') " EJS html templates highlighting
 call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
 call dein#add('heavenshell/vim-jsdoc') " JS/TS docs
 call dein#add('rust-lang/rust.vim') " Rust support
+call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
 
 " Autocomplete
 call dein#add('Shougo/deoplete.nvim') " Async autocomplete

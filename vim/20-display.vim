@@ -44,10 +44,6 @@ set list lcs=trail:·,tab:»·
 let &t_SI = "\e]50;CursorShape=1\x7"
 let &t_EI = "\e]50;CursorShape=0\x7"
 
-" Completion show longest match (rather than first), and show menu on single match
-set completeopt=longest,menuone
-set pumheight=20
-
 " Already showing the mode in powerline
 set noshowmode
 
