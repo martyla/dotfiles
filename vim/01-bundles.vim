@@ -46,6 +46,7 @@ call dein#add('tpope/vim-vinegar') " Improved netrw view
 call dein#add('tpope/vim-surround') " manipulate surrounding symbols
 call dein#add('tpope/vim-repeat') " Allow repeating of plugin commands
 call dein#add('junegunn/goyo.vim') " Distraction free writing
+call dein#add('airblade/vim-gitgutter') " Git changes in gutter
 
 " Fuzzy finder
 call dein#add('junegunn/fzf', {'merged': 0})
