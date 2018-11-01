@@ -36,6 +36,7 @@ alias cal='watch -c -n 180 gcalcli agenda today --military --defaultCalendar "mg
 # Prefer nvim if it is installed
 if [[ -e "$(which nvim)" ]]; then
     alias vim="nvim"
+    alias vimdiff='nvim -d'
 fi
 
 # vim
