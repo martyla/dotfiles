@@ -41,6 +41,11 @@ set incsearch
 
 set list lcs=trail:·,tab:»·
 
+" 80 col display (vim 7.3+)
+if exists('+colorcolumn')
+  set colorcolumn=80
+endif
+
 let &t_SI = "\e]50;CursorShape=1\x7"
 let &t_EI = "\e]50;CursorShape=0\x7"
 
