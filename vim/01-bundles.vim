@@ -59,6 +59,7 @@ call dein#add('othree/html5.vim')
 call dein#add('fatih/vim-go') " Golang language support
 call dein#add('hail2u/vim-css3-syntax') " Css language support
 call dein#add('solarnz/python.vim') " Python syntax highlighting
+call dein#add('hashivim/vim-terraform') " Terraform tools and hilighting
 call dein#add('HerringtonDarkholme/yats.vim') " TypeScript syntax highlighting
 call dein#add('nikvdp/ejs-syntax') " EJS html templates highlighting
 call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
