@@ -1,6 +1,8 @@
 [user]
     name = Martin Groen
     email = martin@martinjgroen.com
+[protocol]
+    version = 2
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
