@@ -9,6 +9,8 @@ alias g="git"
 alias gc="git commit"
 alias ga="git add"
 alias gr="git reset"
+# Git rebase green & force push
+alias grgp="git fetch origin green && git rebase origin/green && gpf"
 
 # Use color output for ls/grep
 if ls --help 2>&1 | grep -q -- --color
