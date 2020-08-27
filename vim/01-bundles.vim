@@ -33,7 +33,6 @@ call dein#begin(s:plugin_dir)
 call dein#add('Shougo/dein.vim')
 
 " Functionality
-call dein#add('Shougo/vimproc.vim', {'build': 'make'}) " Async execution library
 call dein#add('Shougo/echodoc.vim') " Display echodoc text (function signatures)
 call dein#add('editorconfig/editorconfig-vim') " Editor agnostic project settings
 call dein#add('matze/vim-move') " Visually move text around.
@@ -45,8 +44,8 @@ call dein#add('tpope/vim-fugitive') " git wrapper
 call dein#add('tpope/vim-vinegar') " Improved netrw view
 call dein#add('tpope/vim-surround') " manipulate surrounding symbols
 call dein#add('tpope/vim-repeat') " Allow repeating of plugin commands
-call dein#add('junegunn/goyo.vim') " Distraction free writing
 call dein#add('airblade/vim-gitgutter') " Git changes in gutter
+call dein#add('neoclide/coc.nvim', {'merged':0, 'rev': 'release'})
 
 " Fuzzy finder
 call dein#add('junegunn/fzf', {'merged': 0})
@@ -62,16 +61,7 @@ call dein#add('solarnz/python.vim') " Python syntax highlighting
 call dein#add('hashivim/vim-terraform') " Terraform tools and hilighting
 call dein#add('HerringtonDarkholme/yats.vim') " TypeScript syntax highlighting
 call dein#add('nikvdp/ejs-syntax') " EJS html templates highlighting
-call dein#add('prettier/vim-prettier', {'build': 'yarn install'}) " Javascript code formatting
-call dein#add('heavenshell/vim-jsdoc') " JS/TS docs
 call dein#add('rust-lang/rust.vim') " Rust support
-call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
-
-" Autocomplete
-call dein#add('Shougo/deoplete.nvim') " Async autocomplete
-call dein#add('carlitux/deoplete-ternjs', {'build': 'yarn global add tern'}) " JS autocomplete
-call dein#add('zchee/deoplete-go', {'build': 'make'})
-call dein#add('racer-rust/vim-racer')
 
 " Themes
 call dein#add('itchyny/lightline.vim') " The best statusbar plugin.

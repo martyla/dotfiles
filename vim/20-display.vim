@@ -51,8 +51,7 @@ let &t_EI = "\e]50;CursorShape=0\x7"
 
 " Already showing the mode in powerline
 set noshowmode
-
-" <TAB>/<s-TAB> completion
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-inoremap <expr><CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+" Extra space for echodoc / language bar
+set cmdheight=2
+set updatetime=300 " better ux
+set shortmess+=c " Supress omni complete messages
