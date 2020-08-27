@@ -64,8 +64,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code
+nmap <leader>p  <Plug>(coc-format)
 xmap <leader>p  <Plug>(coc-format-selected)
-nmap <leader>p  <Plug>(coc-format-selected)
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
