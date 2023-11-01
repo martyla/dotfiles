@@ -29,6 +29,8 @@
     conflictstyle = diff3
 [mergetool]
     prompt = false
+[rebase]
+    updateRefs = true
 [color]
     ui = true
 [color "branch"]
