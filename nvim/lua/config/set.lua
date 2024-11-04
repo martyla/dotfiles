@@ -32,7 +32,13 @@ vim.opt.scrolloff = 10
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes:1"
 vim.opt.updatetime = 50
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "80,100"
+
+vim.opt.spell = false
+vim.opt.showmode = false -- not needed with powerline
+
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false

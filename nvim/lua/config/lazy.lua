@@ -39,6 +39,7 @@ require("lazy").setup({
         { 'hrsh7th/cmp-nvim-lsp' },
         { 'hrsh7th/cmp-nvim-lua' },
         { 'hrsh7th/nvim-cmp' },
+        { 'hrsh7th/cmp-nvim-lsp-signature-help' },
 
         { 'itchyny/lightline.vim' },
         { 'chriskempson/base16-vim' },
