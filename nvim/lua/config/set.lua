@@ -23,6 +23,9 @@ vim.opt.shiftround = true
 vim.opt.joinspaces = false
 vim.opt.foldenable = false
 
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
 vim.opt.ruler = true
 vim.opt.scrolloff = 10
 
