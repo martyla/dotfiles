@@ -16,3 +16,7 @@ vim.keymap.set("n", "tl", ":wincmd l<CR>")
 
 vim.keymap.set("i", "hh", "<esc>")
 vim.keymap.set("", "<leader>m", ":noh<CR>")
+
+-- vim-move: change modifier to ctrl
+-- has to be loaded before plugin loaded.
+vim.g.move_key_modifier = 'C'
