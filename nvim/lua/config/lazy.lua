@@ -18,35 +18,22 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
-        {
-            'nvim-telescope/telescope.nvim',
-            tag = '0.1.8',
-            dependencies = { 'nvim-lua/plenary.nvim' }
-        },
-        { 'nvim-treesitter/nvim-treesitter',  build = ':TSUpdate' },
-        { 'mbbill/undotree' },
-        { 'rhysd/committia.vim' },
-        { 'tpope/vim-vinegar' },
-        { 'tpope/vim-surround' },
-        { 'tpope/vim-fugitive' },
-        { 'matze/vim-move' },
-        { 'airblade/vim-gitgutter' },
+        -- Update itself
+        { "folke/lazy.nvim" },
 
-        { 'VonHeikemen/lsp-zero.nvim',        branch = 'v4.x' },
-        { 'neovim/nvim-lspconfig' },
-        { 'williamboman/mason.nvim' },
-        { 'williamboman/mason-lspconfig.nvim' },
-        { 'hrsh7th/cmp-nvim-lsp' },
-        { 'hrsh7th/cmp-nvim-lua' },
-        { 'hrsh7th/nvim-cmp' },
-        { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+        -- Simple plugins without configuration
+        { 'rhysd/committia.vim' }, -- git commit view
+        { 'tpope/vim-vinegar' }, -- improved netrw
+        { 'tpope/vim-surround' }, -- manipulate surrounding symbols
+        { 'tpope/vim-fugitive' }, -- git commands
+        { 'tpope/vim-repeat' }, -- allow repeating plugin commands
+        { 'itchyny/lightline.vim' }, -- status bar
+        { 'airblade/vim-gitgutter' }, -- git diff in status bar
 
-        { 'itchyny/lightline.vim' },
-        { 'chriskempson/base16-vim' },
+        -- Plugins with more complicated configurations
+        { import = "plugins" },
     },
-    -- Configure any other settings here. See the documentation for more details.
-    -- colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "base16-monokai" } },
-    -- automatically check for plugin updates
-    checker = { enabled = true, notify = false },
+    -- automatically check for plugin updates, but don't notify
+    checker = { notify = false },
+    change_detection = { notify = false },
 })
