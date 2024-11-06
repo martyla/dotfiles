@@ -5,16 +5,6 @@ bindkey -s '^f' 'tmux-sessionizer\n'
 # [Ctrl-r] - backwards incremental search
 bindkey '^r' history-incremental-search-backward
 
-# [PageUp] - Up a line of history
-if [[ "${terminfo[kpp]}" != "" ]]; then
-  bindkey "${terminfo[kpp]}" up-line-or-history
-fi
-
-# [PageDown] - Down a line of history
-if [[ "${terminfo[knp]}" != "" ]]; then
-  bindkey "${terminfo[knp]}" down-line-or-history
-fi
-
 # start typing + [Up-Arrow] - fuzzy find history forward
 if [[ "${terminfo[kcuu1]}" != "" ]]; then
   autoload -U up-line-or-beginning-search
