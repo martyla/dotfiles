@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+bindkey -s '^f' 'tmux-sessionizer\n'
+
 # [Ctrl-r] - backwards incremental search
 bindkey '^r' history-incremental-search-backward
 
