@@ -34,7 +34,7 @@ focus_follows_mouse no
 
 # start a terminal
 # bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec alacritty
 
 # lock the screen
 bindsym $mod+Escape exec i3lock -c 222222
