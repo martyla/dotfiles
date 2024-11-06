@@ -1,13 +1,41 @@
 [general]
 live_config_reload = true
 
-[font]
-size = 20
-normal.family = "Inconsolata"
-
 [env]
 TERM = "xterm-256color"
 
 [window]
-decorations = "buttonless"
 dynamic_padding = false
+
+[font]
+size = 18
+normal.family = "Inconsolata"
+
+# Base16 monokai theme
+[colors.primary]
+background = '#272822'
+foreground = '#f8f8f2'
+
+[colors.cursor]
+text = '#272822'
+cursor = '#f8f8f2'
+
+[colors.normal]
+black = '#272822'
+red = '#f92672'
+green = '#a6e22e'
+yellow = '#f4bf75'
+blue = '#66d9ef'
+magenta = '#ae81ff'
+cyan = '#a1efe4'
+white = '#f8f8f2'
+
+[colors.bright]
+black = '#75715e'
+red = '#fd971f'
+green = '#383830'
+yellow = '#49483e'
+blue = '#a59f85'
+magenta = '#f5f4f1'
+cyan = '#cc6633'
+white = '#f9f8f5'
