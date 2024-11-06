@@ -8,7 +8,7 @@ TERM = "xterm-256color"
 dynamic_padding = false
 
 [font]
-size = 18
+size = 16
 normal.family = "Inconsolata"
 
 # Base16 monokai theme
