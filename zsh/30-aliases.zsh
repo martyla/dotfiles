@@ -8,6 +8,7 @@ alias j="jobs"
 alias g="git"
 alias gc="git commit"
 alias ga="git add"
+alias gca="git commit --amend"
 alias gr="git reset"
 # Git rebase green & force push
 alias grgp="git fetch origin green && git rebase origin/green && gpf"
@@ -33,12 +34,10 @@ alias rip="curl http://icanhazip.com"
 # Reload shell (invoke as login shell)
 alias reload="exec $SHELL -l"
 
-alias cal='watch -c -n 180 gcalcli agenda today --military --defaultCalendar "mgroen@freelancer.com"'
-
 # Prefer nvim if it is installed
 if [[ -e "$(which nvim)" ]]; then
     alias vim="nvim"
-    alias vimdiff='nvim -d'
+    alias vimdiff='nvimdiff'
 fi
 
 # vim
