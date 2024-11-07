@@ -21,3 +21,6 @@ vim.keymap.set("i", "hh", "<esc>")
 
 -- Remove highlighting
 vim.keymap.set("", "<leader>m", ":noh<CR>")
+
+-- Swap tmux session
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
