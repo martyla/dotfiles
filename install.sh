@@ -11,7 +11,7 @@ main() {
 
     sudo add-apt-repository -y ppa:neovim-ppa/unstable
     sudo apt-get update
-    sudo apt-get install -y ca-certificates curl gnupg tmux neovim
+    sudo apt-get install -y ca-certificates curl gnupg tmux neovim fzf
 
     local script_dir="$(dirname "$(realpath "$0")")"
 
