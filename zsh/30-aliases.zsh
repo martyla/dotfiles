@@ -9,6 +9,7 @@ alias g="git"
 alias gc="git commit"
 alias ga="git add"
 alias gca="git commit --amend"
+alias gpf='until git push --force-with-lease; do echo "retrying..."; done'
 alias gr="git reset"
 # Git rebase green & force push
 alias grgp="git fetch origin green && git rebase origin/green && gpf"
