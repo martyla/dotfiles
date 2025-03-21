@@ -29,7 +29,7 @@ main() {
     sed -i 's/martin@martinjgroen.com/martin@canva.com/' "$HOME/.gitconfig"
     cp "$script_dir/gitignore_global" "$HOME/.gitignore_global"
 
-    chsh -s /bin/zsh
+    sudo chsh -s /bin/zsh
 }
 
 main "$@"
