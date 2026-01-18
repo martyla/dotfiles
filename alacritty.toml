@@ -39,3 +39,8 @@ blue = '#a59f85'
 magenta = '#f5f4f1'
 cyan = '#cc6633'
 white = '#f9f8f5'
+
+[keyboard]
+bindings = [
+  { key = "Enter", mods = "Shift", chars = "\n" },
+]
