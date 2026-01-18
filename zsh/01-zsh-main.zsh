@@ -14,5 +14,5 @@ zstyle ':completion:*' menu selectA
 
 export GREP_OPTIONS=''
 export PATH=$HOME/.bin:$HOME/bin:/usr/local/bin:$PATH
-export EDITOR=vim
-export VISUAL=vim
+export EDITOR=nvim
+export VISUAL=nvim
