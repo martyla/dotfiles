@@ -41,6 +41,11 @@ if [[ -e "$(which nvim)" ]]; then
     alias vimdiff='nvimdiff'
 fi
 
+# copy to clipboard via osc52 escape sequence
+copy() {
+  printf '\033]52;c;%s\a' "$(base64 </dev/stdin | tr -d '\n')" >/dev/tty
+}
+
 # vim
 alias v='vim'
 alias vf='vim $(fzf --height 40% --border --reverse)'
