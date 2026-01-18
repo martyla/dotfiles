@@ -5,8 +5,8 @@ if [[ -e $HOME/.xinitrc.local ]]; then
 fi
 
 # Fix backspace capslock repeat
-setxkbmap -option caps:backspace
-setxkbmap -option shift:both_capslock
+# setxkbmap -option caps:backspace
+# setxkbmap -option shift:both_capslock
 xmodmap -e "clear Lock"
 
 # Keyboard repeat rate
