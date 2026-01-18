@@ -32,7 +32,7 @@ return {
         -- Mason manages installation of language servers
         require('mason').setup({})
         require('mason-lspconfig').setup({
-            ensure_installed = { 'eslint', 'lua_ls', 'jdtls', 'rust_analyzer', 'zls' },
+            ensure_installed = { 'eslint', 'lua_ls', 'rust_analyzer', 'zls' },
             handlers = {
                 -- default handler (applies when no custom handler)
                 function(server_name)
