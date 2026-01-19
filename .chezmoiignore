@@ -1,1 +1,13 @@
+{{- if not (default false (get . "include_alacritty")) }}
+.alacritty.toml
+{{- end }}
+{{- if not (default false (get . "include_i3")) }}
+.i3/
+{{- end }}
+{{- if not (default false (get . "include_conky")) }}
+.conkyrc
+{{- end }}
+{{- if not (default false (get . "include_xinitrc")) }}
+.xinitrc
+{{- end }}
 README.md
