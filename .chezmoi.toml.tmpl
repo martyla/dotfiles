@@ -22,6 +22,20 @@
 {{- end -}}
 {{- end -}}
 
+{{- /* Define project directories used by tmux-sessionizer for fast searching */ -}}
+{{- /* Use existing config if set, otherwise defaults */ -}}
+{{- $project_dirs := list -}}
+{{- if and (hasKey . "project_dirs") (gt (len .project_dirs) 0) -}}
+{{- $project_dirs = .project_dirs -}}
+{{- else -}}
+{{- /* Default directories */ -}}
+{{- $project_dirs = list "~/projects" .chezmoi.sourceDir -}}
+{{- /* Work profile */ -}}
+{{- if eq $profile "work" -}}
+{{- $project_dirs = concat $project_dirs (list "~/work") -}}
+{{- end -}}
+{{- end -}}
+
 [data]
 profile = {{ $profile | quote }}
 name = {{ $name | quote }}
@@ -30,3 +44,4 @@ include_alacritty = {{ $include_alacritty }}
 include_i3 = {{ $include_i3 }}
 include_conky = {{ $include_conky }}
 include_xinitrc = {{ $include_xinitrc }}
+project_dirs = {{ $project_dirs | toJson }}
