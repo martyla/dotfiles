@@ -51,6 +51,7 @@ Before staging, check for files that should NEVER be committed:
 - `.DS_Store`, `Thumbs.db` (OS junk)
 
 If any such files appear in `git status`, warn the user and do NOT stage them. List them explicitly.
+If anything is of major concern, terminate **IMMEDIATELY** (including a message detailing _why_).
 
 ## Workflow
 
