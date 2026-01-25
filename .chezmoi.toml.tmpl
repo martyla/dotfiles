@@ -22,6 +22,15 @@
 {{- end -}}
 {{- end -}}
 
+{{- /* Define project directories based on profile */ -}}
+{{- $projectDirs := list -}}
+{{- /* Common directories for all profiles */ -}}
+{{- $projectDirs = concat $projectDirs (list "~/projects" .chezmoi.sourceDir "~") -}}
+{{- /* Profile-specific directories */ -}}
+{{- if eq $profile "work" -}}
+{{- $projectDirs = concat $projectDirs (list "~/work") -}}
+{{- end -}}
+
 [data]
 profile = {{ $profile | quote }}
 name = {{ $name | quote }}
@@ -30,3 +39,4 @@ include_alacritty = {{ $include_alacritty }}
 include_i3 = {{ $include_i3 }}
 include_conky = {{ $include_conky }}
 include_xinitrc = {{ $include_xinitrc }}
+projectDirs = {{ $projectDirs | toJson }}
