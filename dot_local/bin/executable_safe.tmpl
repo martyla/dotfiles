@@ -1,0 +1,161 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+{{- if ne .chezmoi.os "linux" }}
+echo "safe: only supported on linux (chezmoi os={{ .chezmoi.os }})" >&2
+exit 1
+{{- else }}
+
+expand_tilde() {
+  local p="$1"
+  if [[ "$p" == "~" ]]; then
+    printf '%s\n' "$HOME"
+  elif [[ "$p" == "~/"* ]]; then
+    printf '%s\n' "$HOME/${p:2}"
+  else
+    printf '%s\n' "$p"
+  fi
+}
+
+realpath_safely() {
+  realpath -m "$1"
+}
+
+main() {
+  # --- Project directory policy (from chezmoi data) ---
+  local PROJECT_DIRS=(
+{{- range .project_dirs }}
+    {{ . | quote }}
+{{- end }}
+  )
+
+  local pwd_real home_real in_project_dir d d_expanded d_real reply
+  pwd_real="$(realpath_safely "$PWD")"
+  home_real="$(realpath_safely "$HOME")"
+
+  in_project_dir="0"
+  for d in "${PROJECT_DIRS[@]}"; do
+    d_expanded="$(expand_tilde "$d")"
+    d_real="$(realpath_safely "$d_expanded")"
+    if [[ "$pwd_real" == "$d_real" || "$pwd_real" == "$d_real/"* ]]; then
+      in_project_dir="1"
+      break
+    fi
+  done
+
+  if [[ "$in_project_dir" != "1" ]]; then
+    if [[ "$pwd_real" == "$home_real" || "$pwd_real" == "$home_real/"* ]]; then
+      # Prompt when running under $HOME but not in project_dirs
+      if [[ -t 0 ]]; then
+        reply=""
+        read -r -p "safe: '$PWD' is under \$HOME but not in project_dirs. Continue? [y/N] " reply
+        if [[ "$reply" != "y" ]]; then
+          echo "safe: aborted" >&2
+          exit 1
+        fi
+      else
+        echo "safe: refusing to run under \$HOME without tty confirmation" >&2
+        exit 1
+      fi
+    else
+      echo "safe: refusing to run outside project_dirs (PWD='$PWD')" >&2
+      exit 1
+    fi
+  fi
+
+  # --- Build environment allowlist ---
+  local UID_NUM GID_NUM USER_NAME
+  UID_NUM="$(id -u)"
+  GID_NUM="$(id -g)"
+  USER_NAME="$(id -un)"
+
+  # Build optional env passthrough (only if defined)
+  local PASSTHRU_ENVS=()
+  local k
+  for k in TERM LANG LANGUAGE EDITOR VISUAL; do
+    if [[ -n "${!k-}" ]]; then
+      PASSTHRU_ENVS+=( --setenv "$k" "${!k}" )
+    fi
+  done
+
+  # --- Bubblewrap sandbox ---
+  bwrap \
+    --unshare-all \
+    --share-net \
+    --die-with-parent \
+    --new-session \
+    \
+    `# Environment (strict allowlist)` \
+    --clearenv \
+    --setenv HOME "$HOME" \
+    --setenv USER "$USER_NAME" \
+    --setenv LOGNAME "$USER_NAME" \
+    --setenv TMPDIR /tmp \
+    --setenv PWD "$PWD" \
+    --setenv XDG_CONFIG_HOME "$HOME/.config" \
+    --setenv XDG_CACHE_HOME "$HOME/.cache" \
+    --setenv XDG_STATE_HOME "$HOME/.local/state" \
+    --setenv XDG_DATA_HOME "$HOME/.local/share" \
+    --setenv XDG_RUNTIME_DIR "/run/user/$UID_NUM" \
+    --setenv PATH "$PWD/node_modules/.bin:$PWD/bin:/usr/local/bin:/usr/bin:/bin" \
+    "${PASSTHRU_ENVS[@]}" \
+    \
+    `# Basic filesystem (read-only system)` \
+    --ro-bind /usr /usr \
+    --ro-bind /lib /lib \
+    --ro-bind-try /lib64 /lib64 \
+    --ro-bind /bin /bin \
+    --ro-bind /sbin /sbin \
+    \
+    `# proc/dev` \
+    --proc /proc \
+    --dev /dev \
+    \
+    `# tmp and runtime` \
+    --perms 1777 --tmpfs /tmp \
+    --perms 0755 --tmpfs /run \
+    --dir /run/user \
+    --perms 0700 --dir "/run/user/$UID_NUM" \
+    --dir /var \
+    --perms 1777 --tmpfs /var/tmp \
+    --symlink /run /var/run \
+    \
+    `# SSL and certs` \
+    --ro-bind-try /etc/ssl /etc/ssl \
+    --ro-bind-try /etc/ca-certificates /etc/ca-certificates \
+    --ro-bind-try /etc/pki /etc/pki \
+    \
+    `# DNS + identity resolution` \
+    --ro-bind-try /etc/resolv.conf /etc/resolv.conf \
+    --ro-bind-try /etc/hosts /etc/hosts \
+    --ro-bind-try /etc/nsswitch.conf /etc/nsswitch.conf \
+    --ro-bind-try /etc/passwd /etc/passwd \
+    --ro-bind-try /etc/group /etc/group \
+    --ro-bind-try /etc/localtime /etc/localtime \
+    --ro-bind-try /etc/timezone /etc/timezone \
+    --ro-bind-try /etc/alternatives /etc/alternatives \
+    \
+    `# Home (create empty, then bind only what we allow)` \
+    --perms 0700 --dir "$HOME" \
+    --bind-try "$HOME/.cache" "$HOME/.cache" \
+    \
+    `# OpenCode dirs (read-write)` \
+    --bind-try "$HOME/.cache/opencode" "$HOME/.cache/opencode" \
+    --bind-try "$HOME/.local/share/opencode" "$HOME/.local/share/opencode" \
+    --bind-try "$HOME/.local/state/opencode" "$HOME/.local/state/opencode" \
+    --bind-try "$HOME/.config/opencode" "$HOME/.config/opencode" \
+    \
+    `# Git config (read-only)` \
+    --ro-bind-try "$HOME/.gitconfig" "$HOME/.gitconfig" \
+    --ro-bind-try "$HOME/.config/git" "$HOME/.config/git" \
+    \
+    `# Workspace (read-write, gated by checks above)` \
+    --bind-try "$PWD" "$PWD" \
+    --chdir "$PWD" \
+    \
+    `# Run command` \
+    -- "$@"
+}
+{{- end }}
+
+main "$@"
