@@ -79,6 +79,13 @@ main() {
     fi
   done
 
+  # --- Set terminal title to command name ---
+  local cmd_name
+  cmd_name="$(basename "$1")"
+  if [[ -t 1 ]]; then
+    printf '\033]0;%s\007' "$cmd_name"
+  fi
+
   # --- Bubblewrap sandbox ---
   bwrap \
     --unshare-all \
