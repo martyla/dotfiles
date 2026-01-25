@@ -27,5 +27,8 @@
   "keybinds": {
     "input_submit": "enter",
     "input_newline": "ctrl+enter"
+  },
+  "experimental": {
+    "disable_paste_summary": true
   }
 }
