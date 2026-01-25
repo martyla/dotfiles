@@ -1,9 +1,10 @@
+{{- $extra_dirs := list .chezmoi.sourceDir -}}
 #!/usr/bin/env bash
 
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find {{ .project_dirs | join " " }} -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf)
+    selected=$({ printf '%s\n' {{ $extra_dirs | join " " }}; find {{ .workspace_dirs | join " " }} -mindepth 1 -maxdepth 1 -type d 2>/dev/null; } | sort -r | fzf)
 fi
 
 if [[ -z $selected ]]; then

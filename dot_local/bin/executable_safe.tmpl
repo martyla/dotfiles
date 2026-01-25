@@ -22,33 +22,34 @@ realpath_safely() {
 }
 
 main() {
-  # --- Project directory policy (from chezmoi data) ---
-  local PROJECT_DIRS=(
-{{- range .project_dirs }}
+  # --- Workspace directory policy (from chezmoi data) ---
+  local WORKSPACE_DIRS=(
+{{- range .workspace_dirs }}
     {{ . | quote }}
 {{- end }}
+    {{ .chezmoi.sourceDir | quote }}
   )
 
-  local pwd_real home_real in_project_dir d d_expanded d_real reply
+  local pwd_real home_real in_workspace_dir d d_expanded d_real reply
   pwd_real="$(realpath_safely "$PWD")"
   home_real="$(realpath_safely "$HOME")"
 
-  in_project_dir="0"
-  for d in "${PROJECT_DIRS[@]}"; do
+  in_workspace_dir="0"
+  for d in "${WORKSPACE_DIRS[@]}"; do
     d_expanded="$(expand_tilde "$d")"
     d_real="$(realpath_safely "$d_expanded")"
     if [[ "$pwd_real" == "$d_real" || "$pwd_real" == "$d_real/"* ]]; then
-      in_project_dir="1"
+      in_workspace_dir="1"
       break
     fi
   done
 
-  if [[ "$in_project_dir" != "1" ]]; then
+  if [[ "$in_workspace_dir" != "1" ]]; then
     if [[ "$pwd_real" == "$home_real" || "$pwd_real" == "$home_real/"* ]]; then
-      # Prompt when running under $HOME but not in project_dirs
+      # Prompt when running under $HOME but not in workspace_dirs
       if [[ -t 0 ]]; then
         reply=""
-        read -r -p "safe: '$PWD' is under \$HOME but not in project_dirs. Continue? [y/N] " reply
+        read -r -p "safe: '$PWD' is under \$HOME but not in workspace_dirs. Continue? [y/N] " reply
         if [[ "$reply" != "y" ]]; then
           echo "safe: aborted" >&2
           exit 1
@@ -58,7 +59,7 @@ main() {
         exit 1
       fi
     else
-      echo "safe: refusing to run outside project_dirs (PWD='$PWD')" >&2
+      echo "safe: refusing to run outside workspace_dirs (PWD='$PWD')" >&2
       exit 1
     fi
   fi

@@ -22,17 +22,17 @@
 {{- end -}}
 {{- end -}}
 
-{{- /* Define project directories used by tmux-sessionizer for fast searching */ -}}
+{{- /* Define workspace directories used by tmux-sessionizer for fast searching */ -}}
 {{- /* Use existing config if set, otherwise defaults */ -}}
-{{- $project_dirs := list -}}
-{{- if and (hasKey . "project_dirs") (gt (len .project_dirs) 0) -}}
-{{- $project_dirs = .project_dirs -}}
+{{- $workspace_dirs := list -}}
+{{- if and (hasKey . "workspace_dirs") (gt (len .workspace_dirs) 0) -}}
+{{- $workspace_dirs = .workspace_dirs -}}
 {{- else -}}
 {{- /* Default directories */ -}}
-{{- $project_dirs = list "~/projects" .chezmoi.sourceDir -}}
+{{- $workspace_dirs = list "~/projects" -}}
 {{- /* Work profile */ -}}
 {{- if eq $profile "work" -}}
-{{- $project_dirs = concat $project_dirs (list "~/work") -}}
+{{- $workspace_dirs = concat $workspace_dirs (list "~/work") -}}
 {{- end -}}
 {{- end -}}
 
@@ -44,4 +44,4 @@ include_alacritty = {{ $include_alacritty }}
 include_i3 = {{ $include_i3 }}
 include_conky = {{ $include_conky }}
 include_xinitrc = {{ $include_xinitrc }}
-project_dirs = {{ $project_dirs | toJson }}
+workspace_dirs = {{ $workspace_dirs | toJson }}
