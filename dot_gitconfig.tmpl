@@ -1,6 +1,6 @@
 [user]
-    name = "Martin Groen"
-    email = {{- if eq .profile "work" }}"martin@canva.com"{{- else if eq .profile "home"}}"martin@martinjgroen.com"{{- end }}
+    name = {{ .name | quote }}
+    email = {{ .email | quote }}
 [protocol]
     version = 2
 [core]

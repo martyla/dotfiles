@@ -1,0 +1,32 @@
+{{- $profile := promptStringOnce . "profile" "Which profile should this machine use? (home or work)" -}}
+{{- if and (ne $profile "home") (ne $profile "work") -}}
+{{- fail "profile must be 'home' or 'work'" -}}
+{{- end -}}
+
+{{- $include_alacritty := default false (get . "include_alacritty") -}}
+{{- $include_i3 := default false (get . "include_i3") -}}
+{{- $include_conky := default false (get . "include_conky") -}}
+{{- $include_xinitrc := default false (get . "include_xinitrc") -}}
+
+{{- $name := default "" (get . "name") -}}
+{{- if eq $name "" -}}
+{{- $name = "Martin Groen" -}}
+{{- end -}}
+
+{{- $email := default "" (get . "email") -}}
+{{- if eq $email "" -}}
+{{- if eq $profile "work" -}}
+{{- $email = "martin@canva.com" -}}
+{{- else if eq $profile "home" -}}
+{{- $email = "martin@martinjgroen.com" -}}
+{{- end -}}
+{{- end -}}
+
+[data]
+profile = {{ $profile | quote }}
+name = {{ $name | quote }}
+email = {{ $email | quote }}
+include_alacritty = {{ $include_alacritty }}
+include_i3 = {{ $include_i3 }}
+include_conky = {{ $include_conky }}
+include_xinitrc = {{ $include_xinitrc }}
