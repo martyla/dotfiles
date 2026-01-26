@@ -73,7 +73,7 @@ main() {
   # Build optional env passthrough (only if defined)
   local PASSTHRU_ENVS=()
   local k
-  for k in TERM LANG LANGUAGE EDITOR VISUAL; do
+  for k in TERM LANG LANGUAGE EDITOR VISUAL PATH; do
     if [[ -n "${!k-}" ]]; then
       PASSTHRU_ENVS+=( --setenv "$k" "${!k}" )
     fi
@@ -105,7 +105,6 @@ main() {
     --setenv XDG_STATE_HOME "$HOME/.local/state" \
     --setenv XDG_DATA_HOME "$HOME/.local/share" \
     --setenv XDG_RUNTIME_DIR "/run/user/$UID_NUM" \
-    --setenv PATH "$PWD/node_modules/.bin:$PWD/bin:/usr/local/bin:/usr/bin:/bin" \
     "${PASSTHRU_ENVS[@]}" \
     \
     `# Basic filesystem (read-only system)` \
@@ -148,6 +147,7 @@ main() {
     --bind-try "$HOME/.cache" "$HOME/.cache" \
     \
     `# OpenCode dirs (read-write)` \
+    --bind-try "$HOME/.opencode" "$HOME/.opencode" \
     --bind-try "$HOME/.cache/opencode" "$HOME/.cache/opencode" \
     --bind-try "$HOME/.local/share/opencode" "$HOME/.local/share/opencode" \
     --bind-try "$HOME/.local/state/opencode" "$HOME/.local/state/opencode" \
