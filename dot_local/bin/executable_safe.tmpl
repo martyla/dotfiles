@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-{{- if ne .chezmoi.os "linux" }}
-echo "safe: only supported on linux (chezmoi os={{ .chezmoi.os }})" >&2
+{{- if and (ne .chezmoi.os "linux") (ne .chezmoi.os "darwin") }}
+echo "safe: only supported on linux and darwin (chezmoi os={{ .chezmoi.os }})" >&2
 exit 1
 {{- else }}
 
@@ -18,7 +18,19 @@ expand_tilde() {
 }
 
 realpath_safely() {
-  realpath -m "$1"
+  # Portable realpath using POSIX cd/pwd for existing paths
+  local target="$1"
+  if [[ -d "$target" ]]; then
+    (cd "$target" && pwd -P)
+  elif [[ -f "$target" ]]; then
+    local dir base
+    dir="$(dirname "$target")"
+    base="$(basename "$target")"
+    printf '%s/%s\n' "$(cd "$dir" && pwd -P)" "$base"
+  else
+    # Non-existent: try realpath -m (GNU), then realpath (BSD), then return as-is
+    realpath -m "$target" 2>/dev/null || realpath "$target" 2>/dev/null || printf '%s\n' "$target"
+  fi
 }
 
 main() {
@@ -64,18 +76,59 @@ main() {
     fi
   fi
 
-  # --- Build environment allowlist ---
-  local UID_NUM GID_NUM USER_NAME
+  # --- Common variables used by both sandboxes ---
+  local UID_NUM USER_NAME
   UID_NUM="$(id -u)"
-  GID_NUM="$(id -g)"
   USER_NAME="$(id -un)"
 
-  # Build optional env passthrough (only if defined)
-  local PASSTHRU_ENVS=()
+  # Read-write paths (used by both sandboxes)
+  local SAFE_RW_PATHS=(
+    "$PWD"
+    "$HOME/.cache"
+    "$HOME/.opencode"
+    "$HOME/.cache/opencode"
+    "$HOME/.local/share/opencode"
+    "$HOME/.local/state/opencode"
+    "$HOME/.config/opencode"
+  )
+
+  # Read-only paths (used by both sandboxes)
+  local SAFE_RO_PATHS=(
+    "$HOME/.gitconfig"
+    "$HOME/.config/git"
+  )
+
+  # Build environment arrays for both sandboxes
+  # ENV_PAIRS: "KEY=VALUE" format for env -i (darwin)
+  # BWRAP_ENV: --setenv KEY VALUE format for bwrap (linux)
+  local ENV_PAIRS=()
+  local BWRAP_ENV=()
+
+  add_env() {
+    local key="$1" val="$2"
+    ENV_PAIRS+=( "$key=$val" )
+    BWRAP_ENV+=( --setenv "$key" "$val" )
+  }
+
+  # Core environment
+  add_env HOME "$HOME"
+  add_env USER "$USER_NAME"
+  add_env LOGNAME "$USER_NAME"
+  add_env TMPDIR /tmp
+  add_env PWD "$PWD"
+  add_env XDG_CONFIG_HOME "$HOME/.config"
+  add_env XDG_CACHE_HOME "$HOME/.cache"
+  add_env XDG_STATE_HOME "$HOME/.local/state"
+  add_env XDG_DATA_HOME "$HOME/.local/share"
+{{- if eq .chezmoi.os "linux" }}
+  add_env XDG_RUNTIME_DIR "/run/user/$UID_NUM"
+{{- end }}
+
+  # Optional passthrough env vars
   local k
   for k in TERM LANG LANGUAGE EDITOR VISUAL PATH; do
     if [[ -n "${!k-}" ]]; then
-      PASSTHRU_ENVS+=( --setenv "$k" "${!k}" )
+      add_env "$k" "${!k}"
     fi
   done
 
@@ -86,7 +139,25 @@ main() {
     printf '\033]0;%s\007' "$cmd_name"
   fi
 
-  # --- Bubblewrap sandbox ---
+{{- if eq .chezmoi.os "linux" }}
+  # --- Bubblewrap sandbox (Linux) ---
+  local BWRAP_BIND_ARGS=()
+  local p
+
+  # Add read-write binds
+  for p in "${SAFE_RW_PATHS[@]}"; do
+    if [[ -e "$p" ]]; then
+      BWRAP_BIND_ARGS+=( --bind "$p" "$p" )
+    fi
+  done
+
+  # Add read-only binds
+  for p in "${SAFE_RO_PATHS[@]}"; do
+    if [[ -e "$p" ]]; then
+      BWRAP_BIND_ARGS+=( --ro-bind "$p" "$p" )
+    fi
+  done
+
   bwrap \
     --unshare-all \
     --share-net \
@@ -95,17 +166,7 @@ main() {
     \
     `# Environment (strict allowlist)` \
     --clearenv \
-    --setenv HOME "$HOME" \
-    --setenv USER "$USER_NAME" \
-    --setenv LOGNAME "$USER_NAME" \
-    --setenv TMPDIR /tmp \
-    --setenv PWD "$PWD" \
-    --setenv XDG_CONFIG_HOME "$HOME/.config" \
-    --setenv XDG_CACHE_HOME "$HOME/.cache" \
-    --setenv XDG_STATE_HOME "$HOME/.local/state" \
-    --setenv XDG_DATA_HOME "$HOME/.local/share" \
-    --setenv XDG_RUNTIME_DIR "/run/user/$UID_NUM" \
-    "${PASSTHRU_ENVS[@]}" \
+    "${BWRAP_ENV[@]}" \
     \
     `# Basic filesystem (read-only system)` \
     --ro-bind /usr /usr \
@@ -142,27 +203,103 @@ main() {
     --ro-bind-try /etc/timezone /etc/timezone \
     --ro-bind-try /etc/alternatives /etc/alternatives \
     \
-    `# Home (create empty, then bind only what we allow)` \
+    `# Home (create empty, then bind allowed paths)` \
     --perms 0700 --dir "$HOME" \
-    --bind-try "$HOME/.cache" "$HOME/.cache" \
+    "${BWRAP_BIND_ARGS[@]}" \
     \
-    `# OpenCode dirs (read-write)` \
-    --bind-try "$HOME/.opencode" "$HOME/.opencode" \
-    --bind-try "$HOME/.cache/opencode" "$HOME/.cache/opencode" \
-    --bind-try "$HOME/.local/share/opencode" "$HOME/.local/share/opencode" \
-    --bind-try "$HOME/.local/state/opencode" "$HOME/.local/state/opencode" \
-    --bind-try "$HOME/.config/opencode" "$HOME/.config/opencode" \
-    \
-    `# Git config (read-only)` \
-    --ro-bind-try "$HOME/.gitconfig" "$HOME/.gitconfig" \
-    --ro-bind-try "$HOME/.config/git" "$HOME/.config/git" \
-    \
-    `# Workspace (read-write, gated by checks above)` \
-    --bind-try "$PWD" "$PWD" \
     --chdir "$PWD" \
     \
     `# Run command` \
     -- "$@"
+{{- else if eq .chezmoi.os "darwin" }}
+  # --- sandbox-exec sandbox (macOS) ---
+  local profile p
+
+  # Build sandbox profile
+  profile='(version 1)
+(deny default)
+
+;; Allow process operations
+(allow process-exec)
+(allow process-fork)
+(allow signal)
+
+;; Allow network access
+(allow network*)
+
+;; Allow sysctl reads (needed for many programs)
+(allow sysctl-read)
+
+;; Allow mach lookups (IPC)
+(allow mach-lookup)
+
+;; Allow pseudo-terminal operations (needed for TUI apps)
+(allow pseudo-tty)
+
+;; Allow ioctl on terminal devices and standard file descriptors
+(allow file-ioctl
+  (literal "/dev/tty")
+  (literal "/dev/null")
+  (literal "/dev/zero")
+  (literal "/dev/random")
+  (literal "/dev/urandom")
+  (regex #"^/dev/ttys[0-9]+$")
+  (regex #"^/dev/fd/[0-9]+$")
+)
+
+;; System read-only paths
+(allow file-read*
+  (subpath "/System")
+  (subpath "/usr")
+  (subpath "/bin")
+  (subpath "/sbin")
+  (subpath "/Library")
+  (subpath "/Applications")
+  (subpath "/private/etc")
+  (subpath "/private/var/db")
+  (subpath "/dev")
+  (literal "/")
+  (subpath "/var")
+  (subpath "/etc")
+  (subpath "/tmp")
+  (subpath "/private/tmp")
+)
+
+;; Device write access (for pty allocation)
+(allow file-write*
+  (literal "/dev/tty")
+  (regex #"^/dev/ttys[0-9]+$")
+  (regex #"^/dev/pty[a-z][0-9a-f]+$")
+)
+
+;; Temp directories (read-write)
+(allow file-read* file-write*
+  (subpath "/tmp")
+  (subpath "/private/tmp")
+  (subpath "/var/folders")
+  (subpath "/private/var/folders")
+)
+'
+
+  # Add read-write paths to profile
+  for p in "${SAFE_RW_PATHS[@]}"; do
+    if [[ -e "$p" ]]; then
+      profile+="
+(allow file-read* file-write* (subpath \"$p\"))"
+    fi
+  done
+
+  # Add read-only paths to profile
+  for p in "${SAFE_RO_PATHS[@]}"; do
+    if [[ -e "$p" ]]; then
+      profile+="
+(allow file-read* (subpath \"$p\"))"
+    fi
+  done
+
+  # Execute with sandbox
+  /usr/bin/sandbox-exec -p "$profile" /usr/bin/env -i "${ENV_PAIRS[@]}" "$@"
+{{- end }}
 }
 {{- end }}
 
