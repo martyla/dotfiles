@@ -19,6 +19,18 @@
     "input_submit": "enter",
     "input_newline": "ctrl+enter"
   },
+  "permission": {
+    "*": "allow",
+    "bash": {
+      "*": "allow",
+      "git push *": "ask",
+      "git rebase *": "ask",
+      "git reset *": "ask",
+      "git checkout *": "ask",
+      "rm -rf *": "ask"
+    },
+    "external_directory": "ask"
+  },
   "experimental": {
     "disable_paste_summary": true
   }
