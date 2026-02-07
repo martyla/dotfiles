@@ -50,5 +50,5 @@ copy() {
 alias v='vim'
 alias vf='vim $(fzf --height 40% --border --reverse)'
 
-# opencode in sandbox
-alias soc='safe opencode'
+# opencode in sandbox by default.
+alias opencode='safe opencode'

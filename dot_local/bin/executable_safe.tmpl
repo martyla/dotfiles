@@ -265,8 +265,12 @@ main() {
   (subpath "/private/tmp")
 )
 
-;; Device write access (for pty allocation)
+;; Device write access (for pty allocation and /dev/null etc.)
 (allow file-write*
+  (literal "/dev/null")
+  (literal "/dev/zero")
+  (literal "/dev/random")
+  (literal "/dev/urandom")
   (literal "/dev/tty")
   (regex #"^/dev/ttys[0-9]+$")
   (regex #"^/dev/pty[a-z][0-9a-f]+$")
