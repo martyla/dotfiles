@@ -33,6 +33,26 @@ realpath_safely() {
   fi
 }
 
+profile_literal_ro_rules() {
+  local path="$1"
+  printf ' (allow file-read* (literal "%s"))\n' "$path"
+  if [[ "$path" == /Users/* ]]; then
+    printf ' (allow file-read* (literal "%s"))\n' "/System/Volumes/Data$path"
+  fi
+}
+
+profile_parent_chain_ro_rules() {
+  local path="$1"
+  local walk="$path"
+  while [[ -n "$walk" ]]; do
+    profile_literal_ro_rules "$walk"
+    if [[ "$walk" == "/" ]]; then
+      break
+    fi
+    walk="$(dirname "$walk")"
+  done
+}
+
 main() {
   # --- Workspace directory policy (from chezmoi data) ---
   local WORKSPACE_DIRS=(
@@ -97,6 +117,8 @@ main() {
     "$HOME/.gitconfig"
     "$HOME/.gitignore_global"
     "$HOME/.config/git"
+    "$HOME/.local/bin"
+    "$HOME/.local/share/uv"
   )
 
   # Build environment arrays for both sandboxes
@@ -254,6 +276,7 @@ main() {
   (subpath "/usr")
   (subpath "/bin")
   (subpath "/sbin")
+  (subpath "/opt/homebrew")
   (subpath "/Library")
   (subpath "/Applications")
   (subpath "/private/etc")
@@ -286,11 +309,21 @@ main() {
 )
 '
 
+  # Allow metadata traversal for canonicalization on project and uv paths.
+  profile+="
+$(profile_parent_chain_ro_rules "$PWD")"
+  profile+="
+$(profile_parent_chain_ro_rules "$HOME/.local/share/uv")"
+
   # Add read-write paths to profile
   for p in "${SAFE_RW_PATHS[@]}"; do
     if [[ -e "$p" ]]; then
       profile+="
-(allow file-read* file-write* (subpath \"$p\"))"
+ (allow file-read* file-write* (subpath \"$p\"))"
+      if [[ "$p" == /Users/* ]]; then
+        profile+="
+ (allow file-read* file-write* (subpath \"/System/Volumes/Data$p\"))"
+      fi
     fi
   done
 
@@ -298,7 +331,11 @@ main() {
   for p in "${SAFE_RO_PATHS[@]}"; do
     if [[ -e "$p" ]]; then
       profile+="
-(allow file-read* (subpath \"$p\"))"
+ (allow file-read* (subpath \"$p\"))"
+      if [[ "$p" == /Users/* ]]; then
+        profile+="
+ (allow file-read* (subpath \"/System/Volumes/Data$p\"))"
+      fi
     fi
   done
 
