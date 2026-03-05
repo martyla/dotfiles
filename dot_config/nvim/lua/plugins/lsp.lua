@@ -24,8 +24,8 @@ return {
                 vim.keymap.set("n", "grn", function() vim.lsp.buf.rename() end, opts)
                 vim.keymap.set({"n", "i"}, "<C-s>", function() vim.lsp.buf.signature_help() end, opts)
                 vim.keymap.set({ 'n', 'v' }, '<leader>l', function() vim.lsp.buf.format({ async = true }) end, opts)
-                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
+                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
             end,
         })
 
