@@ -10,22 +10,27 @@ return {
             git = {
                 files = {
                     silent = true,
+                    cmd = "git ls-files --cached --others --exclude-standard",
                 },
             },
         })
 
         local is_inside_work_tree = {}
         local function project_files()
-            local cwd = vim.fn.getcwd()
-            if is_inside_work_tree[cwd] == nil then
-                vim.fn.system("git rev-parse --is-inside-work-tree")
-                is_inside_work_tree[cwd] = vim.v.shell_error == 0
+            local buf_dir = vim.fn.expand('%:p:h')
+            if buf_dir == '' then
+                buf_dir = vim.fn.getcwd()
             end
 
-            if is_inside_work_tree[cwd] then
+            if is_inside_work_tree[buf_dir] == nil then
+                vim.fn.system({ "git", "-C", buf_dir, "rev-parse", "--is-inside-work-tree" })
+                is_inside_work_tree[buf_dir] = vim.v.shell_error == 0
+            end
+
+            if is_inside_work_tree[buf_dir] then
                 fzf.git_files()
             else
-                fzf.files()
+                fzf.files({ cwd = buf_dir })
             end
         end
 
