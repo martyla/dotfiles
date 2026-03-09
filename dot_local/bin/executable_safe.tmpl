@@ -311,11 +311,15 @@ main() {
 )
 '
 
-  # Allow metadata traversal for canonicalization on project and uv paths.
+  # Allow metadata traversal for canonicalization on project, uv, and temp paths.
   profile+="
 $(profile_parent_chain_ro_rules "$PWD")"
   profile+="
 $(profile_parent_chain_ro_rules "$HOME/.local/share/uv")"
+  profile+="
+$(profile_parent_chain_ro_rules "/tmp")"
+  profile+="
+$(profile_parent_chain_ro_rules "/private/tmp")"
 
   # Add read-write paths to profile
   for p in "${SAFE_RW_PATHS[@]}"; do
