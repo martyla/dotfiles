@@ -11,3 +11,4 @@
 .xinitrc
 {{- end }}
 README.md
+AGENTS.md
