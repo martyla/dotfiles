@@ -101,6 +101,20 @@ main() {
   UID_NUM="$(id -u)"
   USER_NAME="$(id -un)"
 
+  # Git worktrees keep repository metadata outside the current worktree.
+  # Detect those paths before entering the sandbox so git can still inspect them.
+  local GIT_DIR="" GIT_COMMON_DIR=""
+  if command -v git >/dev/null 2>&1; then
+    GIT_DIR="$(git rev-parse --absolute-git-dir 2>/dev/null || true)"
+    GIT_COMMON_DIR="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+    if [[ -n "$GIT_DIR" ]]; then
+      GIT_DIR="$(realpath_safely "$GIT_DIR")"
+    fi
+    if [[ -n "$GIT_COMMON_DIR" ]]; then
+      GIT_COMMON_DIR="$(realpath_safely "$GIT_COMMON_DIR")"
+    fi
+  fi
+
   # Read-write paths (used by both sandboxes)
   local SAFE_RW_PATHS=(
     "$PWD"
@@ -112,6 +126,12 @@ main() {
     "$HOME/.local/state/opencode"
     "$HOME/.config/opencode"
   )
+  if [[ -n "$GIT_DIR" ]]; then
+    SAFE_RW_PATHS+=( "$GIT_DIR" )
+  fi
+  if [[ -n "$GIT_COMMON_DIR" && "$GIT_COMMON_DIR" != "$GIT_DIR" ]]; then
+    SAFE_RW_PATHS+=( "$GIT_COMMON_DIR" )
+  fi
 
   # Read-only paths (used by both sandboxes)
   local SAFE_RO_PATHS=(
@@ -314,6 +334,14 @@ main() {
   # Allow metadata traversal for canonicalization on project, uv, and temp paths.
   profile+="
 $(profile_parent_chain_ro_rules "$PWD")"
+  if [[ -n "$GIT_DIR" ]]; then
+    profile+="
+$(profile_parent_chain_ro_rules "$GIT_DIR")"
+  fi
+  if [[ -n "$GIT_COMMON_DIR" && "$GIT_COMMON_DIR" != "$GIT_DIR" ]]; then
+    profile+="
+$(profile_parent_chain_ro_rules "$GIT_COMMON_DIR")"
+  fi
   profile+="
 $(profile_parent_chain_ro_rules "$HOME/.local/share/uv")"
   profile+="
