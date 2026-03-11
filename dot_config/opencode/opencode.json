@@ -4,7 +4,7 @@
   "default_agent": "build",
   "compaction": {
     "auto": false,
-    "prune": false
+    "prune": true
   },
   "keybinds": {
     "input_submit": "enter",
