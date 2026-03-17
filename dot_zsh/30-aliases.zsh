@@ -12,7 +12,16 @@ alias gca="git commit --amend --no-edit"
 alias gpf='until git push --force-with-lease; do echo "retrying..."; done'
 alias gr="git reset"
 # Git rebase green & force push
-alias grgp="git fetch origin green && git rebase origin/green && gpf"
+alias grgp="git fetch origin master && git rebase origin/master && gpf"
+
+# git branch latest
+function gbl() {
+  if [ -z "$1" ]; then
+    git branch --sort=-committerdate | head -10 | nl
+  else
+    git checkout `git branch --sort=-committerdate | sed -n "$1"p`
+  fi
+}
 
 # Use color output for ls/grep
 if ls --help 2>&1 | grep -q -- --color
