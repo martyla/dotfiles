@@ -21,4 +21,3 @@ vim.keymap.set("i", "hh", "<esc>")
 
 -- Remove highlighting
 vim.keymap.set("", "<leader>m", ":noh<CR>")
-

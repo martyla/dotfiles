@@ -1,4 +1,5 @@
 require("config/set")
 require("config/keys")
+require("config/commands")
 require("config/auto")
 require("config/lazy")
