@@ -9,6 +9,7 @@ return {
     },
     config = function()
         local cmp = require('cmp')
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
         -- This is where you enable features that only work
         -- if there is a language server active in the file
@@ -16,16 +17,16 @@ return {
             desc = 'LSP actions',
             callback = function(event)
                 local opts = { buffer = event.buf }
-                vim.keymap.set('n', 'gd', function() vim.lsp.buf.definition() end, opts)
-                vim.keymap.set('n', 'gi', function() vim.lsp.buf.implementation() end, opts)
-                vim.keymap.set('n', 'gs', function() vim.lsp.buf.hover() end, opts)
-                vim.keymap.set("n", "gra", function() vim.lsp.buf.code_action() end, opts)
-                vim.keymap.set("n", "grr", function() vim.lsp.buf.references() end, opts)
-                vim.keymap.set("n", "grn", function() vim.lsp.buf.rename() end, opts)
-                vim.keymap.set({"n", "i"}, "<C-s>", function() vim.lsp.buf.signature_help() end, opts)
-                vim.keymap.set({ 'n', 'v' }, '<leader>l', function() vim.lsp.buf.format({ async = true }) end, opts)
-                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+                vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+                vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+                vim.keymap.set({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
+                vim.keymap.set({"n", "i"}, "<C-k>", vim.lsp.buf.signature_help, opts)
+                vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+                vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
             end,
         })
 
@@ -36,11 +37,14 @@ return {
             handlers = {
                 -- default handler (applies when no custom handler)
                 function(server_name)
-                    require('lspconfig')[server_name].setup({})
+                    require('lspconfig')[server_name].setup({
+                        capabilities = capabilities,
+                    })
                 end,
 
                 lua_ls = function()
                     require('lspconfig').lua_ls.setup({
+                        capabilities = capabilities,
                         settings = {
                             Lua = {
                                 diagnostics = {
