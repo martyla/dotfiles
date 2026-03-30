@@ -22,9 +22,9 @@ require("lazy").setup({
         { "folke/lazy.nvim" },
 
         -- Simple plugins without configuration
+        { 'kylechui/nvim-surround' }, -- manipulate surrounding symbols
         { 'rhysd/committia.vim' }, -- git commit view
         { 'tpope/vim-vinegar' }, -- improved netrw
-        { 'tpope/vim-surround' }, -- manipulate surrounding symbols
         { 'tpope/vim-fugitive' }, -- git commands
         { 'tpope/vim-repeat' }, -- allow repeating plugin commands
         { 'itchyny/lightline.vim' }, -- status bar
