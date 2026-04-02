@@ -1,10 +1,6 @@
-vim.g.mapleader = " "
+vim.g.mapleader = ","
 
-vim.keymap.set("n", "<leader>q", ":q<CR>")
-vim.keymap.set("n", "<leader>Q", ":wq<CR>")
-
--- Switch to alternate file
-vim.keymap.set("n", "<Tab>", "<C-^><CR>")
+-- Buffer nav
 vim.keymap.set("n", "[b", ":bprev<CR>")
 vim.keymap.set("n", "]b", ":bnext<CR>")
 
