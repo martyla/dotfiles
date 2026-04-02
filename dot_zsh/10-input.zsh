@@ -2,6 +2,12 @@
 
 bindkey -s '^f' 'tmux-sessionizer\n'
 
+shift-enter-newline() {
+  LBUFFER+=$'\n'
+}
+zle -N shift-enter-newline
+bindkey '^[[13;2u' shift-enter-newline
+
 # [Ctrl-r] - backwards incremental search
 bindkey '^r' history-incremental-search-backward
 
