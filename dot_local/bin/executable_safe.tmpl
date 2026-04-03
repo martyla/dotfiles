@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Run programs with reasonably permissive defaults while confining writes to the
+# current workspace plus a small set of config/work dirs, and restricting access
+# to the rest of $HOME.
+
+{{- $safeRwHomePathSuffixes := list
+  ".pi"
+  ".opencode"
+  ".agents"
+  ".cache"
+  ".local"
+  ".config"
+-}}
+{{- $safeRoHomePathSuffixes := list
+  ".gitconfig"
+  ".gitignore_global"
+-}}
 {{- if and (ne .chezmoi.os "linux") (ne .chezmoi.os "darwin") }}
 echo "safe: only supported on linux and darwin (chezmoi os={{ .chezmoi.os }})" >&2
 exit 1
@@ -33,44 +49,30 @@ realpath_safely() {
   fi
 }
 
-profile_literal_ro_rules() {
-  local path="$1"
-  printf ' (allow file-read* (literal "%s"))\n' "$path"
+profile_subpath_rules() {
+  local perms="$1" path="$2"
+  printf ' (allow %s (subpath "%s"))\n' "$perms" "$path"
   if [[ "$path" == /Users/* ]]; then
-    printf ' (allow file-read* (literal "%s"))\n' "/System/Volumes/Data$path"
+    printf ' (allow %s (subpath "%s"))\n' "$perms" "/System/Volumes/Data$path"
   fi
-}
-
-profile_parent_chain_ro_rules() {
-  local path="$1"
-  local walk="$path"
-  while [[ -n "$walk" ]]; do
-    profile_literal_ro_rules "$walk"
-    if [[ "$walk" == "/" ]]; then
-      break
-    fi
-    walk="$(dirname "$walk")"
-  done
 }
 
 main() {
   # --- Workspace directory policy (from chezmoi data) ---
-  local WORKSPACE_DIRS=(
+  local REAL_WORKSPACE_DIRS=(
 {{- range .workspace_dirs }}
-    {{ . | quote }}
+    "$(realpath_safely "$(expand_tilde {{ . | quote }})")"
 {{- end }}
-    {{ .chezmoi.sourceDir | quote }}
+    "$(realpath_safely {{ .chezmoi.sourceDir | quote }})"
   )
 
-  local pwd_real home_real in_workspace_dir d d_expanded d_real reply
+  local pwd_real home_real in_workspace_dir d reply
   pwd_real="$(realpath_safely "$PWD")"
   home_real="$(realpath_safely "$HOME")"
 
   in_workspace_dir="0"
-  for d in "${WORKSPACE_DIRS[@]}"; do
-    d_expanded="$(expand_tilde "$d")"
-    d_real="$(realpath_safely "$d_expanded")"
-    if [[ "$pwd_real" == "$d_real" || "$pwd_real" == "$d_real/"* ]]; then
+  for d in "${REAL_WORKSPACE_DIRS[@]}"; do
+    if [[ "$pwd_real" == "$d" || "$pwd_real" == "$d/"* ]]; then
       in_workspace_dir="1"
       break
     fi
@@ -100,48 +102,6 @@ main() {
   local UID_NUM USER_NAME
   UID_NUM="$(id -u)"
   USER_NAME="$(id -un)"
-
-  # Git worktrees keep repository metadata outside the current worktree.
-  # Detect those paths before entering the sandbox so git can still inspect them.
-  local GIT_DIR="" GIT_COMMON_DIR=""
-  if command -v git >/dev/null 2>&1; then
-    GIT_DIR="$(git rev-parse --absolute-git-dir 2>/dev/null || true)"
-    GIT_COMMON_DIR="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
-    if [[ -n "$GIT_DIR" ]]; then
-      GIT_DIR="$(realpath_safely "$GIT_DIR")"
-    fi
-    if [[ -n "$GIT_COMMON_DIR" ]]; then
-      GIT_COMMON_DIR="$(realpath_safely "$GIT_COMMON_DIR")"
-    fi
-  fi
-
-  # Read-write paths (used by both sandboxes)
-  local SAFE_RW_PATHS=(
-    "$PWD"
-    "$HOME/.agents"
-    "$HOME/.cache"
-    "$HOME/.pi"
-    "$HOME/.opencode"
-    "$HOME/.cache/opencode"
-    "$HOME/.local/share/opencode"
-    "$HOME/.local/state/opencode"
-    "$HOME/.config/opencode"
-  )
-  if [[ -n "$GIT_DIR" ]]; then
-    SAFE_RW_PATHS+=( "$GIT_DIR" )
-  fi
-  if [[ -n "$GIT_COMMON_DIR" && "$GIT_COMMON_DIR" != "$GIT_DIR" ]]; then
-    SAFE_RW_PATHS+=( "$GIT_COMMON_DIR" )
-  fi
-
-  # Read-only paths (used by both sandboxes)
-  local SAFE_RO_PATHS=(
-    "$HOME/.gitconfig"
-    "$HOME/.gitignore_global"
-    "$HOME/.config/git"
-    "$HOME/.local/bin"
-    "$HOME/.local/share/uv"
-  )
 
   # Build environment arrays for both sandboxes
   # ENV_PAIRS: "KEY=VALUE" format for env -i (darwin)
@@ -190,18 +150,28 @@ main() {
   local p
 
   # Add read-write binds
-  for p in "${SAFE_RW_PATHS[@]}"; do
+  if [[ -e "$PWD" ]]; then
+    BWRAP_BIND_ARGS+=( --bind "$PWD" "$PWD" )
+  fi
+  for p in "${REAL_WORKSPACE_DIRS[@]}"; do
     if [[ -e "$p" ]]; then
       BWRAP_BIND_ARGS+=( --bind "$p" "$p" )
     fi
   done
+{{- range $safeRwHomePathSuffixes }}
+  p="$HOME/{{ . }}"
+  if [[ -e "$p" ]]; then
+    BWRAP_BIND_ARGS+=( --bind "$p" "$p" )
+  fi
+{{- end }}
 
-  # Add read-only binds
-  for p in "${SAFE_RO_PATHS[@]}"; do
-    if [[ -e "$p" ]]; then
-      BWRAP_BIND_ARGS+=( --ro-bind "$p" "$p" )
-    fi
-  done
+  # Add static read-only binds
+{{- range $safeRoHomePathSuffixes }}
+  p="$HOME/{{ . }}"
+  if [[ -e "$p" ]]; then
+    BWRAP_BIND_ARGS+=( --ro-bind "$p" "$p" )
+  fi
+{{- end }}
 
   bwrap \
     --unshare-all \
@@ -219,6 +189,7 @@ main() {
     --ro-bind-try /lib64 /lib64 \
     --ro-bind /bin /bin \
     --ro-bind /sbin /sbin \
+    --ro-bind-try /opt /opt \
     \
     `# proc/dev` \
     --proc /proc \
@@ -294,6 +265,7 @@ main() {
 
 ;; System read-only paths
  (allow file-read*
+   (literal "/")
    (subpath "/System")
    (subpath "/usr")
    (subpath "/bin")
@@ -301,15 +273,11 @@ main() {
    (subpath "/opt")
    (subpath "/Library")
    (subpath "/Applications")
-   (subpath "/private/etc")
-   (subpath "/private/var/db")
-   (subpath "/private/var/select")
    (subpath "/dev")
-   (literal "/")
    (subpath "/var")
    (subpath "/etc")
    (subpath "/tmp")
-  (subpath "/private/tmp")
+   (subpath "/private")
 )
 
 ;; Device write access (for pty allocation and /dev/null etc.)
@@ -332,47 +300,44 @@ main() {
 )
 '
 
-  # Allow metadata traversal for canonicalization on project, uv, and temp paths.
-  profile+="
-$(profile_parent_chain_ro_rules "$PWD")"
-  if [[ -n "$GIT_DIR" ]]; then
+  # Allow reading the home directory entry itself so commands like `safe ls ~`
+  # can list top-level names without granting recursive access to all of $HOME.
+  if [[ -e "$HOME" ]]; then
     profile+="
-$(profile_parent_chain_ro_rules "$GIT_DIR")"
+ (allow file-read* (literal \"$HOME\"))"
+    if [[ "$HOME" == /Users/* ]]; then
+      profile+="
+ (allow file-read* (literal \"/System/Volumes/Data$HOME\"))"
+    fi
   fi
-  if [[ -n "$GIT_COMMON_DIR" && "$GIT_COMMON_DIR" != "$GIT_DIR" ]]; then
-    profile+="
-$(profile_parent_chain_ro_rules "$GIT_COMMON_DIR")"
-  fi
-  profile+="
-$(profile_parent_chain_ro_rules "$HOME/.local/share/uv")"
-  profile+="
-$(profile_parent_chain_ro_rules "/tmp")"
-  profile+="
-$(profile_parent_chain_ro_rules "/private/tmp")"
 
   # Add read-write paths to profile
-  for p in "${SAFE_RW_PATHS[@]}"; do
+  if [[ -e "$PWD" ]]; then
+    profile+="
+$(profile_subpath_rules "file-read* file-write*" "$PWD")"
+  fi
+  for p in "${REAL_WORKSPACE_DIRS[@]}"; do
     if [[ -e "$p" ]]; then
       profile+="
- (allow file-read* file-write* (subpath \"$p\"))"
-      if [[ "$p" == /Users/* ]]; then
-        profile+="
- (allow file-read* file-write* (subpath \"/System/Volumes/Data$p\"))"
-      fi
+$(profile_subpath_rules "file-read* file-write*" "$p")"
     fi
   done
+{{- range $safeRwHomePathSuffixes }}
+  p="$HOME/{{ . }}"
+  if [[ -e "$p" ]]; then
+    profile+="
+$(profile_subpath_rules "file-read* file-write*" "$p")"
+  fi
+{{- end }}
 
-  # Add read-only paths to profile
-  for p in "${SAFE_RO_PATHS[@]}"; do
-    if [[ -e "$p" ]]; then
-      profile+="
- (allow file-read* (subpath \"$p\"))"
-      if [[ "$p" == /Users/* ]]; then
-        profile+="
- (allow file-read* (subpath \"/System/Volumes/Data$p\"))"
-      fi
-    fi
-  done
+  # Add static read-only paths to profile
+{{- range $safeRoHomePathSuffixes }}
+  p="$HOME/{{ . }}"
+  if [[ -e "$p" ]]; then
+    profile+="
+$(profile_subpath_rules "file-read*" "$p")"
+  fi
+{{- end }}
 
   # Execute with sandbox
   /usr/bin/sandbox-exec -p "$profile" /usr/bin/env -i "${ENV_PAIRS[@]}" "$@"
