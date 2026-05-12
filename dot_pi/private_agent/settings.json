@@ -1,13 +1,11 @@
 {
-  "lastChangelogVersion": "0.64.0",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.4",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
   "hideThinkingBlock": true,
   "enabledModels": [
-    "openai-codex/gpt-5.4",
-    "github-copilot/claude-opus-4.6",
-    "github-copilot/claude-sonnet-4.6"
+    "openai-codex/gpt-5.5",
+    "github-copilot/claude-opus-4.7"
   ],
   "packages": [
     "npm:pi-web-access"
