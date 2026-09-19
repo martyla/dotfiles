@@ -68,3 +68,6 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+# Machine-specific overrides (e.g. work email); must stay last to win.
+[include]
+    path = ~/.gitconfig.local
