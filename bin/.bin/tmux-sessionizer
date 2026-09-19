@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
+# Space-separated list of parent dirs to search, e.g. "~/projects ~/work".
+dirs=(${TMUX_SESSIONIZER_DIRS:-~/projects})
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort -r | fzf)
+    selected=$(find "${dirs[@]/#\~/$HOME}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort -r | fzf)
 fi
 
 if [[ -z $selected ]]; then
