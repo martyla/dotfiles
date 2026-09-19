@@ -7,9 +7,9 @@ return {
         local fzf = require('fzf-lua');
         local setup_opts = { 'default' }
         if vim.fn.executable('fd') == 1 then
-            setup_opts.files = { cmd = "fd --type f --hidden" }
+            setup_opts.files = { cmd = "fd --type f --hidden --exclude .git" }
         elseif vim.fn.executable('rg') == 1 then
-            setup_opts.files = { cmd = "rg --files --hidden" }
+            setup_opts.files = { cmd = "rg --files --hidden --glob '!.git'" }
         end
         fzf.setup(setup_opts)
 
