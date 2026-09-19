@@ -3,11 +3,13 @@
 # Shortcuts
 alias h="history"
 alias j="jobs"
+alias s='. ~/.zshrc'
 
 # Git
 alias g="git"
 alias gc="git commit"
 alias ga="git add"
+alias gf="git fetch"
 alias gca="git commit --amend --no-edit"
 alias gpf='until git push --force-with-lease; do echo "retrying..."; done'
 alias gr="git reset"
@@ -21,6 +23,14 @@ function gbl() {
   else
     git checkout `git branch --sort=-committerdate | sed -n "$1"p`
   fi
+}
+
+# fzf git branch delete multiple
+function fdbr() {
+  local branches branch
+  branches=$(git branch -vv) &&
+  branch=$(echo "$branches" | fzf -m --layout reverse) &&
+  git branch -D $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
 }
 
 function ssh-persist() {
