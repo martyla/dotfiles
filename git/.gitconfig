@@ -22,15 +22,29 @@
     whitespace = error
 [diff]
     tool = nvimdiff
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
 [difftool]
     prompt = false
 [merge]
     tool = nvimdiff
-    conflictstyle = diff3
+    conflictstyle = zdiff3
 [mergetool]
     prompt = false
 [rebase]
     updateRefs = true
+[fetch]
+    showForcedUpdates = true
+    prune = true
+    pruneTags = true
+    all = true
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
 [color]
     ui = true
 [color "branch"]
