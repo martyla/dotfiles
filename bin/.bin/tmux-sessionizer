@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Space-separated list of parent dirs to search, e.g. "~/projects ~/work".
-dirs=(${TMUX_SESSIONIZER_DIRS:-~/projects})
+dirs=(${TMUX_SESSIONIZER_DIRS:-~/projects ~/work})
 
 if [[ $# -eq 1 ]]; then
     selected=$1
