@@ -1,13 +1,13 @@
 {
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-fable-5.1",
+  "defaultModel": "claude-opus-5-5",
   "defaultThinkingLevel": "xhigh",
-  "httpIdleTimeoutMs": 30000,
+  "httpIdleTimeoutMs": 60000,
   "retry": {
     "enabled": true
   },
   "enabledModels": [
-    "anthropic/claude-fable-5.1",
+    "anthropic/claude-opus-5-5",
     "openai/gpt-6-astra"
   ],
   "packages": [
