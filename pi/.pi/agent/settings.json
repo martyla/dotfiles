@@ -3,6 +3,7 @@
   "defaultModel": "claude-opus-5-5",
   "defaultThinkingLevel": "xhigh",
   "httpIdleTimeoutMs": 30000,
+  "defaultTools": ["+codemode"],
   "retry": {
     "enabled": true
   },
@@ -17,6 +18,7 @@
     "npm:@gotgenes/pi-anthropic-auth",
     "npm:pi-web-access"
   ],
-  "lastChangelogVersion": "0.87.1",
+  "collapseChangelog": true,
+  "enableInstallTelemetry": false,
   "theme": "dark"
 }
