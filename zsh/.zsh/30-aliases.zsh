@@ -11,7 +11,7 @@ alias gc="git commit"
 alias ga="git add"
 alias gf="git fetch"
 alias gca="git commit --amend --no-edit"
-alias gpf='until git push --force-with-lease; do echo "retrying..."; done'
+alias gpf='until git push --force-with-lease; do echo "retrying..."; sleep 1; done'
 alias gr="git reset"
 # Git rebase master & force push
 alias grgp="git fetch origin master && git rebase origin/master && gpf"
