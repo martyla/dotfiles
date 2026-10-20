@@ -1,7 +1,7 @@
 {
   "defaultProvider": "anthropic",
   "defaultModel": "claude-opus-5-5",
-  "defaultThinkingLevel": "xhigh",
+  "defaultThinkingLevel": "high",
   "httpIdleTimeoutMs": 30000,
   "defaultTools": ["+codemode"],
   "retry": {
