@@ -1,7 +1,0 @@
-{
-  "provider": "parallel-mcp",
-  "fetchRouting": {
-    "providers": ["http", "parallel-mcp"],
-    "allowRemoteHostedProviders": true
-  }
-}

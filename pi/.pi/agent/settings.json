@@ -15,8 +15,7 @@
   "packages": [
     "npm:@ff-labs/pi-fff@0.10.6",
     "npm:@pi-kaush/pi-double-paste@0.1.1",
-    "npm:@gotgenes/pi-anthropic-auth",
-    "npm:pi-web-access"
+    "npm:@gotgenes/pi-anthropic-auth"
   ],
   "collapseChangelog": true,
   "enableInstallTelemetry": false,
