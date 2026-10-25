@@ -10,19 +10,27 @@ return {
             return
         end
 
-        local parsers = { 'java', 'javascript', 'typescript', 'c', 'lua', 'rust', 'zig', 'vim', 'vimdoc' }
+        local parsers = {
+            'bash', 'c', 'cpp', 'css', 'html', 'java', 'javascript', 'json',
+            'lua', 'proto', 'python', 'regex', 'rust', 'toml', 'tsx',
+            'typescript', 'yaml', 'zig', 'zsh',
+        }
 
-        ts.install(parsers)
+        local function start(buf)
+            pcall(vim.treesitter.start, buf)
+        end
 
         vim.api.nvim_create_autocmd('FileType', {
-            pattern = vim.iter(parsers)
-                :map(function(p) return vim.treesitter.language.get_filetypes(p) end)
-                :flatten()
-                :totable(),
-            callback = function(args)
-                -- Parser installation can still be running on first launch.
-                pcall(vim.treesitter.start, args.buf)
-            end,
+            callback = function(args) start(args.buf) end,
         })
-    end,
+
+        -- Install is async; once done, enable highlighting in buffers opened meanwhile
+        ts.install(parsers):await(vim.schedule_wrap(function()
+            for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+                if vim.api.nvim_buf_is_loaded(buf) then
+                    start(buf)
+                end
+            end
+        end))
+    end
 }
