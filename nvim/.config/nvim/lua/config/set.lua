@@ -38,6 +38,8 @@ vim.opt.showmode = false -- not needed with powerline
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
