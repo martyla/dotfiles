@@ -10,7 +10,8 @@
   "enabledModels": [
     "anthropic/claude-opus-5-5",
     "anthropic/claude-sonnet-5-5",
-    "openai/gpt-6-astra"
+    "openai/gpt-6-astra",
+    "openai/gpt-6.1-sol"
   ],
   "packages": [
     "npm:@ff-labs/pi-fff@0.10.6",
