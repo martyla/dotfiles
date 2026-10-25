@@ -3,7 +3,7 @@
 Each folder mirrors `$HOME`. Pick what you want based on top level folder.
 
 ```sh
-./install.sh platform zsh nvim tmux git bin agents pi
+./install.sh platform zsh nvim tmux git agents pi
 ./install.sh i3 conky xinit alacritty   # linux desktop
 ```
 

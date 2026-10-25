@@ -38,7 +38,7 @@ install_platform() {
 
 main() {
     if [[ $# -eq 0 ]]; then
-        echo "usage: ./install.sh <folder>... e.g. ./install.sh platform zsh nvim tmux git bin agents pi"
+        echo "usage: ./install.sh <folder>... e.g. ./install.sh platform zsh nvim tmux git agents pi"
         exit 1
     fi
 
