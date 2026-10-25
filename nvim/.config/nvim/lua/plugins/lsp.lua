@@ -11,6 +11,16 @@ return {
         local cmp = require('cmp')
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+        -- Jump to the next/previous diagnostic and show it in a float
+        local function diagnostic_jump(count)
+            vim.diagnostic.jump({
+                count = count,
+                on_jump = function(_, bufnr)
+                    vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
+                end,
+            })
+        end
+
         -- This is where you enable features that only work
         -- if there is a language server active in the file
         vim.api.nvim_create_autocmd('LspAttach', {
@@ -25,36 +35,30 @@ return {
                 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
                 vim.keymap.set({"n", "i"}, "<C-k>", vim.lsp.buf.signature_help, opts)
-                vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-                vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+                vim.keymap.set("n", "]d", function() diagnostic_jump(1) end, opts)
+                vim.keymap.set("n", "[d", function() diagnostic_jump(-1) end, opts)
             end,
         })
 
-        -- Mason manages installation of language servers
+        -- Server configuration, merged on top of nvim-lspconfig's defaults
+        vim.lsp.config('*', {
+            capabilities = capabilities,
+        })
+        vim.lsp.config('lua_ls', {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim' }
+                    }
+                }
+            }
+        })
+
+        -- Mason manages installation of language servers; mason-lspconfig
+        -- enables installed servers via vim.lsp.enable() (automatic_enable)
         require('mason').setup({})
         require('mason-lspconfig').setup({
-            ensure_installed = { 'eslint', 'lua_ls', 'rust_analyzer', 'zls' },
-            handlers = {
-                -- default handler (applies when no custom handler)
-                function(server_name)
-                    require('lspconfig')[server_name].setup({
-                        capabilities = capabilities,
-                    })
-                end,
-
-                lua_ls = function()
-                    require('lspconfig').lua_ls.setup({
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = { 'vim' }
-                                }
-                            }
-                        }
-                    })
-                end,
-            },
+            ensure_installed = { 'basedpyright', 'eslint', 'lua_ls', 'rust_analyzer', 'vtsls', 'zls' },
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
