@@ -3,14 +3,8 @@ return {
     dependencies = {
         'williamboman/mason.nvim',
         'williamboman/mason-lspconfig.nvim',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-nvim-lua',
-        'hrsh7th/nvim-cmp',
     },
     config = function()
-        local cmp = require('cmp')
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
         -- This is where you enable features that only work
         -- if there is a language server active in the file
         -- (gr* mirror neovim defaults, see :h lsp-defaults)
@@ -43,9 +37,6 @@ return {
         })
 
         -- Server configuration, merged on top of nvim-lspconfig's defaults
-        vim.lsp.config('*', {
-            capabilities = capabilities,
-        })
         vim.lsp.config('lua_ls', {
             settings = {
                 Lua = {
@@ -61,26 +52,6 @@ return {
         require('mason').setup({})
         require('mason-lspconfig').setup({
             ensure_installed = { 'basedpyright', 'eslint', 'lua_ls', 'rust_analyzer', 'vtsls', 'zls' },
-        })
-
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
-        cmp.setup({
-            sources = {
-                { name = 'nvim_lsp' },
-                { name = 'nvim_lua' },
-            },
-            snippet = {
-                expand = function(args)
-                    -- You need Neovim v0.10 to use vim.snippet
-                    vim.snippet.expand(args.body)
-                end,
-            },
-            mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
-            }),
         })
     end
 }
