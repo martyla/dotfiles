@@ -194,7 +194,7 @@ const NODES = [
     path: "dotfiles/install.sh", badge: "deploy",
     what: [
       "<code class=i>./install.sh nvim</code> rsyncs the dot-entries of <code class=i>nvim/</code> onto <code class=i>$HOME</code>, so <code class=i>nvim/.config/nvim/*</code> lands in <code class=i>~/.config/nvim/</code>.",
-      "Non-dot files next to <code class=i>.config/</code> are not copied and only live in the repo: <code class=i>nvim/AGENTS.md</code> and this page (<code class=i>nvim/architecture.html</code>).",
+      "Non-dot files next to <code class=i>.config/</code> are not copied and only live in the repo: <code class=i>nvim/AGENTS.md</code> and this page (<code class=i>nvim/README.html</code>).",
       "Files are copied (not symlinked); overwritten files go to <code class=i>.backup/&lt;timestamp&gt;/</code>.",
       "<code class=i>./install.sh platform</code> installs the tools the config expects: <b>neovim, fd, ripgrep, fzf, git, node/npm, tree-sitter-cli</b>.",
     ],
@@ -644,7 +644,7 @@ function renderEmpty() {
       <li>Leader <kbd>,</kbd> · 4-space indent · persistent undo · base16-monokai</li>
       <li>LSP for Python, TS/JS (+ eslint), Lua, Rust, Zig · Treesitter for 19 languages</li>
     </ul>
-    <p style="font-size:12px;margin-top:16px">Lives in <code class=i>dotfiles/nvim/architecture.html</code> and is not installed. Keep it in sync with the config; see <code class=i>nvim/AGENTS.md</code>.</p>
+    <p style="font-size:12px;margin-top:16px">Lives in <code class=i>dotfiles/nvim/README.html</code> and is not installed. Keep it in sync with the config; see <code class=i>nvim/AGENTS.md</code>.</p>
   </div>`;
 }
 

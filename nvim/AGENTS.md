@@ -1,13 +1,13 @@
 # Neovim config
 
-- The config lives in `.config/nvim/`. This file and `architecture.html` are
+- The config lives in `.config/nvim/`. This file and `README.html` are
   repo-only: `install.sh` copies only dot-entries, so they never reach `$HOME`.
-- `architecture.html` is an interactive diagram of the config: a single file
+- `README.html` is an interactive diagram of the config: a single file
   with no dependencies. **Update it in the same change as any config change**
   (plugins, options, keymaps, LSP servers, Treesitter parsers, load order,
   or what `install.sh platform` installs for nvim).
 
-## Updating architecture.html
+## Updating README.html
 
 1. Edit the data in the `<script>` block to match the config:
    - `NODES`: one box per file, plugin, or external tool. `what` describes
@@ -28,7 +28,7 @@
    src = {str(p.relative_to(cfg)): p.read_text() for p in sorted(cfg.rglob('*'))
           if p.is_file() and p.suffix in ('.lua', '.json')}
    src['install.sh'] = pathlib.Path('install.sh').read_text()
-   html = pathlib.Path('nvim/architecture.html')
+   html = pathlib.Path('nvim/README.html')
    block = 'const SOURCES = ' + json.dumps(src, ensure_ascii=False).replace('</', '<\\/') + ';'
    html.write_text(re.sub(r'(// BEGIN SOURCES[^\n]*\n).*?(\n// END SOURCES)',
                           lambda m: m[1] + block + m[2], html.read_text(), count=1, flags=re.S))
