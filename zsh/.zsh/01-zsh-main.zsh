@@ -10,6 +10,7 @@ autoload -Uz colors && colors
 autoload -Uz autocd
 setopt autocd
 setopt extendedglob
+setopt interactive_comments
 zstyle ':completion:*' menu selectA
 
 export GREP_OPTIONS=''
