@@ -13,3 +13,7 @@ unrelated files are left alone.
 
 Files that would be overwritten with different content are first saved to
 `.backup/<timestamp>/`, mirroring their path under `$HOME`. `.backup/` is gitignored.
+
+## Package docs
+
+- [nvim](https://martyla.github.io/dotfiles/nvim/README.html)
