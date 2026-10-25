@@ -17,3 +17,9 @@ vim.keymap.set("i", "hh", "<esc>")
 
 -- Remove highlighting
 vim.keymap.set("", "<leader>m", ":noh<CR>")
+
+-- Undotree (built-in)
+vim.keymap.set("n", "<leader>u", function()
+    vim.cmd.packadd("nvim.undotree")
+    vim.cmd.Undotree()
+end)
