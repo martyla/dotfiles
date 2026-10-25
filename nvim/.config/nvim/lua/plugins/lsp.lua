@@ -27,8 +27,9 @@ return {
             end,
         })
 
-        -- Show diagnostic float after ]d / [d
+        -- Inline diagnostics, full message in a float after ]d / [d
         vim.diagnostic.config({
+            virtual_text = true,
             jump = {
                 on_jump = function(_, bufnr)
                     vim.diagnostic.open_float({ bufnr = bufnr, scope = 'cursor', focus = false })
