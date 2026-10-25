@@ -14,6 +14,7 @@ return {
                 local opts = { buffer = event.buf }
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
                 vim.keymap.set({ 'n', 'v' }, '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
+                vim.keymap.set('n', '<leader>i', function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, opts)
                 vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
                 vim.keymap.set('n', 'grn', vim.lsp.buf.rename, opts)
                 vim.keymap.set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, opts)
@@ -26,6 +27,9 @@ return {
                 vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count = -vim.v.count1 }) end, opts)
             end,
         })
+
+        -- Inlay hints (types, parameter names)
+        vim.lsp.inlay_hint.enable()
 
         -- Inline diagnostics, full message in a float after ]d / [d
         vim.diagnostic.config({
@@ -46,6 +50,16 @@ return {
                     }
                 }
             }
+        })
+        local ts_inlay_hints = {
+            parameterNames = { enabled = 'literals' },
+            functionLikeReturnTypes = { enabled = true },
+        }
+        vim.lsp.config('vtsls', {
+            settings = {
+                typescript = { inlayHints = ts_inlay_hints },
+                javascript = { inlayHints = ts_inlay_hints },
+            },
         })
 
         -- Mason manages installation of language servers; mason-lspconfig
