@@ -5,10 +5,10 @@ cd "$(dirname "$0")"
 BACKUP_DIR="$PWD/.backup/$(date '+%Y-%m-%d_%H-%M-%S')"
 
 copy() (
-    shopt -s dotglob
     mkdir -p "$2"
     # Copy entries individually so rsync leaves the destination root's permissions alone.
-    rsync -aLc --backup --backup-dir="$BACKUP_DIR" --exclude='.git' --exclude='.DS_Store' "$1"/* "$2"/
+    # Only dot-entries are copied; non-dot files (AGENTS.md, docs) stay repo-only.
+    rsync -aLc --backup --backup-dir="$BACKUP_DIR" --exclude='.git' --exclude='.DS_Store' "$1"/.[!.]* "$2"/
 )
 
 copy_all() {
