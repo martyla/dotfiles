@@ -28,7 +28,6 @@ require("lazy").setup({
         { 'tpope/vim-fugitive' }, -- git commands
         { 'tpope/vim-repeat' }, -- allow repeating plugin commands
         { 'itchyny/lightline.vim' }, -- status bar
-        { 'airblade/vim-gitgutter' }, -- git diff in status bar
 
         -- Plugins with more complicated configurations
         { import = "plugins" },
