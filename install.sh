@@ -18,8 +18,8 @@ copy_all() {
 
 install_ubuntu() {
     sudo apt-get update
-    sudo apt-get install -y build-essential curl fd-find fzf gh git git-lfs keychain \
-        neovim nodejs npm ripgrep rsync tmux tree-sitter-cli zsh
+    sudo apt-get install -y bubblewrap build-essential curl fd-find fzf gh git git-lfs keychain \
+        neovim nodejs npm ripgrep rsync socat tmux tree-sitter-cli zsh
 }
 
 install_macos() {
@@ -33,12 +33,12 @@ install_platform() {
         Darwin) install_macos ;;
         *)      echo "Unsupported OS: $(uname -s)"; exit 1 ;;
     esac
-    npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+    npm install -g --ignore-scripts @earendil-works/pi-coding-agent @anthropic-ai/sandbox-runtime@0.0.81
 }
 
 main() {
     if [[ $# -eq 0 ]]; then
-        echo "usage: ./install.sh <folder>... e.g. ./install.sh platform zsh nvim tmux git agents pi"
+        echo "usage: ./install.sh <folder>... e.g. ./install.sh platform zsh nvim tmux git agents pi sbox"
         exit 1
     fi
 

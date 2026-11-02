@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+config="$HOME/.config/sbox"
+cache="$HOME/.cache/sbox"
+state="$HOME/.local/state/sbox"
+mkdir -p "$cache/tmp" "$state"
+
+# Linux: seccomp can't scope unix sockets by path, so host socket dirs are hidden instead.
+sockets=false
+if [[ "$(uname -s)" == Linux ]]; then
+    sockets=true
+    PATH="$config/bin:$PATH"
+fi
+
+exec env -i \
+    HOME="$HOME" \
+    USER="$USER" \
+    PATH="$PATH" \
+    TERM="$TERM" \
+    LANG="$LANG" \
+    SHELL="$SHELL" \
+    TMUX="$TMUX" \
+    SBOX=1 \
+    ZDOTDIR="$config/zsh" \
+    XDG_CACHE_HOME="$cache" \
+    XDG_STATE_HOME="$state" \
+    TMPDIR="$cache/tmp" \
+    CARGO_HOME="$cache/cargo" \
+    npm_config_cache="$cache/npm" \
+    NODE_USE_ENV_PROXY=1 \
+    srt --settings <(sed "s/\"allowAllUnixSockets\": false/\"allowAllUnixSockets\": $sockets/" "$config/srt-settings.json") \
+    -- "${@:-zsh}"

@@ -1,0 +1,79 @@
+{
+  "network": {
+    "allowedDomains": [
+      "api.anthropic.com",
+      "platform.claude.com",
+      "console.anthropic.com",
+      "claude.ai",
+      "api.openai.com",
+      "auth.openai.com",
+      "chatgpt.com",
+      "api.deepseek.com",
+      "openrouter.ai",
+      "generativelanguage.googleapis.com",
+      "cloudcode-pa.googleapis.com",
+      "oauth2.googleapis.com",
+      "api.x.ai",
+      "search.parallel.ai",
+      "api.parallel.ai",
+      "mcp.canva.com",
+      "github.com",
+      "api.github.com",
+      "codeload.github.com",
+      "*.githubusercontent.com",
+      "registry.npmjs.org",
+      "pypi.org",
+      "files.pythonhosted.org",
+      "crates.io",
+      "index.crates.io",
+      "static.crates.io",
+      "static.rust-lang.org"
+    ],
+    "deniedDomains": [],
+    "allowAllUnixSockets": false,
+    "allowUnixSockets": [
+      "~/.cache/sbox/tmp"
+    ]
+  },
+  "filesystem": {
+    "denyRead": [
+      "~",
+      "/tmp",
+      "/run",
+      "/var/run",
+      "/nix/var/nix/daemon-socket"
+    ],
+    "allowRead": [
+      "~/.agents",
+      "~/.bin",
+      "~/.cargo",
+      "~/.config/nvim",
+      "~/.config/sbox",
+      "~/.gitconfig",
+      "~/.gitignore_global",
+      "~/.local/bin",
+      "~/.local/share/fnm",
+      "~/.local/share/nvim",
+      "~/.rustup",
+      "~/.zsh",
+      "/run/user/*/fnm_multishells"
+    ],
+    "allowWrite": [
+      ".",
+      "~/.cache/sbox",
+      "~/.local/state/sbox",
+      "~/.pi/agent"
+    ],
+    "denyWrite": [
+      "~/.pi/agent/AGENTS.md",
+      "~/.pi/agent/bin",
+      "~/.pi/agent/extensions",
+      "~/.pi/agent/mcp.json",
+      "~/.pi/agent/models.json",
+      "~/.pi/agent/npm",
+      "~/.pi/agent/pi-fff.json",
+      "~/.pi/agent/settings.json",
+      "~/.pi/agent/web-search.json"
+    ]
+  }
+}
