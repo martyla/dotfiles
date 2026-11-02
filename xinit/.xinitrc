@@ -10,7 +10,7 @@ fi
 xmodmap -e "clear Lock"
 
 # Keyboard repeat rate
-xset r rate 300 50
+xset r rate 180 33
 
 # Set monitor sleep
 xset s blank
