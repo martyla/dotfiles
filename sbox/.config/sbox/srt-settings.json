@@ -79,7 +79,6 @@
       "~/.pi/agent/mcp.json",
       "~/.pi/agent/models.json",
       "~/.pi/agent/npm",
-      "~/.pi/agent/pi-fff.json",
       "~/.pi/agent/settings.json",
       "~/.pi/agent/web-search.json"
     ]

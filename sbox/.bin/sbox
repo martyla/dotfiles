@@ -8,13 +8,9 @@ mkdir -p "$cache/tmp" "$state"
 
 # Linux: seccomp can't scope unix sockets by path, so host socket dirs are hidden instead.
 sockets=false
-platform_env=()
 if [[ "$(uname -s)" == Linux ]]; then
     sockets=true
     PATH="$config/bin:$PATH"
-else
-    # macOS: seatbelt denies SysV semaphores, which LMDB needs: empty paths skip fff's dbs.
-    platform_env+=(FFF_FRECENCY_DB= FFF_HISTORY_DB=)
 fi
 
 exec env -i \
@@ -34,6 +30,5 @@ exec env -i \
     CARGO_HOME="$cache/cargo" \
     npm_config_cache="$cache/npm" \
     NODE_USE_ENV_PROXY=1 \
-    "${platform_env[@]}" \
     srt --settings <(sed "s/\"allowAllUnixSockets\": false/\"allowAllUnixSockets\": $sockets/" "$config/srt-settings.json") \
     -- "${@:-zsh}"
