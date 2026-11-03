@@ -10,3 +10,5 @@ done
 
 HISTFILE=$XDG_STATE_HOME/zsh_history
 PROMPT="%{$fg_bold[blue]%}(sbox)%{$reset_color%} $PROMPT"
+
+alias pi='pi --append-system-prompt ~/.config/sbox/AGENTS.md'
