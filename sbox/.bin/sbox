@@ -30,6 +30,7 @@ exec env -i \
     XDG_CACHE_HOME="$cache" \
     XDG_STATE_HOME="$state" \
     TMPDIR="$cache/tmp" \
+    CLAUDE_CODE_TMPDIR="$cache/tmp" \
     CARGO_HOME="$cache/cargo" \
     npm_config_cache="$cache/npm" \
     NODE_USE_ENV_PROXY=1 \
