@@ -18,6 +18,7 @@ exec env -i \
     USER="$USER" \
     PATH="$PATH" \
     TERM="$TERM" \
+    COLORTERM="$COLORTERM" \
     LANG="$LANG" \
     SHELL="$SHELL" \
     TMUX="$TMUX" \
