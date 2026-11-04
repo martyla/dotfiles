@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+if [[ $HOME == "$(pwd -P)"* ]]; then
+    echo "sbox: refusing to run from $PWD: too permissive" >&2
+    exit 1
+fi
+
 config="$HOME/.config/sbox"
 cache="$HOME/.cache/sbox"
 state="$HOME/.local/state/sbox"
+
 mkdir -p "$cache/tmp" "$state"
 
 # Linux: seccomp can't scope unix sockets by path, so host socket dirs are hidden instead.
